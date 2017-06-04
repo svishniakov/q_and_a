@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
+  let(:question) { create(:question) }
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
 
@@ -16,7 +18,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'GET #show' do
     let(:question) { create(:question) }
 
-    before { get :show, params: {id: question} }
+    before { get :show, params: { id: question } }
 
     it 'sets requested question to @question' do
       expect(assigns(:question)).to eq question
@@ -36,8 +38,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    let(:question) { create(:question) }
-    before { get :edit, params: {id: question} }
+    before { get :edit, params: { id: question } }
 
     it 'sets requested question to @question' do
       expect(assigns(:question)).to eq question

@@ -49,6 +49,8 @@ GEM
     arel (7.1.4)
     bindex (0.5.0)
     builder (3.2.3)
+    bulma-rails (0.4.0)
+      sass (~> 3.2)
     byebug (9.0.6)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -67,6 +69,8 @@ GEM
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
     ffi (1.9.18)
+    font-awesome-sass (4.7.0)
+      sass (>= 3.2)
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     i18n (0.8.4)
@@ -202,9 +206,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bulma-rails
   byebug
   coffee-rails (~> 4.2)
   factory_girl_rails
+  font-awesome-sass (~> 4.7.0)
   jbuilder (~> 2.5)
   jquery-rails
   listen (~> 3.0.5)

@@ -7,6 +7,6 @@ RSpec.describe Question, type: :model do
   end
 
   context 'relations' do
-    it { should have_many :answers }
+    it { should have_many(:answers).dependent(:destroy) }
   end
 end

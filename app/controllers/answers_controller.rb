@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_question, only: %i[index new]
+  before_action :set_question, only: %i[index new create]
   before_action :set_answer, only: %i[show edit]
 
   def index
@@ -16,6 +16,16 @@ class AnswersController < ApplicationController
   def edit
   end
 
+  def create
+    @answer = @question.answers.new(answer_params)
+    if @answer.save
+      flash[:notice] = 'Answer was successully created!'
+      redirect_to @answer
+    else
+      render :new
+    end
+  end
+
   private
 
   def set_question
@@ -24,5 +34,9 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def answer_params
+    params.require(:answer).permit(:body, :question_id)
   end
 end

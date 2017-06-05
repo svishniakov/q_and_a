@@ -16,7 +16,7 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:answers)).to match_array(answers)
     end
 
-    it { should render_template :index }
+    it { is_expected.to render_template :index }
   end
 
   describe 'GET #show' do
@@ -26,7 +26,7 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:answer)).to eq answer
     end
 
-    it { should render_template :show }
+    it { is_expected.to render_template :show }
   end
 
   describe 'GET #new' do
@@ -40,7 +40,7 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:answer)).to be_a_new(Answer)
     end
 
-    it { should render_template :new }
+    it { is_expected.to render_template :new }
   end
 
   describe 'GET #edit' do
@@ -50,7 +50,7 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:answer)).to eq answer
     end
 
-    it { should render_template :edit }
+    it { is_expected.to render_template :edit }
   end
 
   describe 'POST #create' do
@@ -61,7 +61,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'redirects to show view' do
         post :create, params: { answer: attributes_for(:answer), question_id: question }
-        should redirect_to answer_path(assigns(:answer))
+        expect(response).to redirect_to answer_path(assigns(:answer))
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 're-render new view' do
         post :create, params: { answer: attributes_for(:invalid_question), question_id: question }
-        should render_template :new
+        expect(response).to render_template :new
       end
     end
   end
@@ -92,7 +92,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'shows updated answer' do
         patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question }
-        should redirect_to answer_path(assigns(:answer))
+        expect(response).to redirect_to answer_path(assigns(:answer))
       end
     end
 
@@ -103,7 +103,7 @@ RSpec.describe AnswersController, type: :controller do
         expect(answer.body).to eq 'Valid answer body'
       end
 
-      it { should render_template :edit }
+      it { is_expected.to render_template :edit }
     end
   end
 
@@ -116,7 +116,7 @@ RSpec.describe AnswersController, type: :controller do
 
     it 'redirects to index view' do
       delete :destroy, params: { id: answer }
-      should redirect_to questions_path
+      expect(response).to redirect_to questions_path
     end
   end
 end

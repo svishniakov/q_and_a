@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :set_question, only: %i[index new create]
-  before_action :set_answer, only: %i[show edit]
+  before_action :set_answer, only: %i[show edit update]
 
   def index
     @answers = @question.answers
@@ -23,6 +23,15 @@ class AnswersController < ApplicationController
       redirect_to @answer
     else
       render :new
+    end
+  end
+
+  def update
+    if @answer.update(answer_params)
+      flash[:notice] = 'Answer was successfully updated!'
+      redirect_to @answer
+    else
+      render :edit
     end
   end
 

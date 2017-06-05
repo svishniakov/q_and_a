@@ -76,4 +76,34 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    context 'using valid attributes' do
+      it 'sets requested answer to an @answer' do
+        patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question }
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'updates answer attributes' do
+        patch :update, params: { id: answer, answer: { body: 'New answer body', question_id: question } }
+        answer.reload
+        expect(answer.body).to eq 'New answer body'
+      end
+
+      it 'shows updated answer' do
+        patch :update, params: { id: answer, answer: attributes_for(:answer), question_id: question }
+        should redirect_to answer_path(assigns(:answer))
+      end
+    end
+
+    context 'using invalid attributes' do
+      before { patch :update, params: { id: answer, answer: { body: nil }, question_id: question } }
+      it 'does not update answer' do
+        answer.reload
+        expect(answer.body).to eq 'Valid answer body'
+      end
+
+      it { should render_template :edit }
+    end
+  end
 end

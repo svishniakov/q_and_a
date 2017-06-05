@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_question, only: %i[index]
+  before_action :set_question, only: %i[index new]
   before_action :set_answer, only: %i[show]
 
   def index
@@ -7,6 +7,10 @@ class AnswersController < ApplicationController
   end
 
   def show
+  end
+
+  def new
+    @answer = @question.answers.new
   end
 
   private

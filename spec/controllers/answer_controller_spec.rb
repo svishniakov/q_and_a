@@ -28,4 +28,18 @@ RSpec.describe AnswersController, type: :controller do
 
     it { should render_template :show }
   end
+
+  describe 'GET #new' do
+    before { get :new, params: { question_id: question } }
+
+    it 'sets answer question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'sets new answer to @answer' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+
+    it { should render_template :new }
+  end
 end

@@ -1,3 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather');
+
+@import "sass/utilities/_all.sass";
+
+$family-serif: "Merriweather", sans-serif;
+$family-primary: $family-serif;
+
 @import "bulma";
 @import "font-awesome-sprockets";
 @import "font-awesome";
+
+.is-alert {
+  background-color: #ffdd57;
+}
+
+.is-error {
+  background-color: #ff3860;
+}
+
+.is-notice {
+  background-color: #3273dc;
+}
+
+#error_explanation {
+  @extend .notification;
+  @extend .is-error;
+}

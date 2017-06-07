@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-feature 'Ask question', %q{
-Logged in user needs to have possibility to ask questions
+feature 'Ask question form', %q{
+Logged in user needs to have possibility to access Ask question form
 } do
 
   given(:user) { create(:user) }
 
-  scenario 'Registered user is trying to access Add question form' do
+  scenario 'Registered user is trying to access Ask question form' do
     sign_in(user)
 
     visit root_path
@@ -15,9 +15,8 @@ Logged in user needs to have possibility to ask questions
   end
 
 
-  scenario 'Anonymous user is trying to access Add question form' do
+  scenario 'Anonymous user is trying to access Ask question form' do
     visit root_path
-    click_on 'Ask question'
-    expect(page).to have_content 'You need to sign in or sign up before continuing'
+    expect(page).to_not have_link 'Ask question'
   end
 end

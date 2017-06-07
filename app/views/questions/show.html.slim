@@ -1,2 +1,11 @@
-h1 Questions#show
-p Find me in app/views/questions/show.html.slim
+.section
+  .columns
+    .column.is-2
+      .card
+        header
+          .card-header
+            .card-header-title
+              = @question.title
+          .card-content
+            .content
+              = @question.body

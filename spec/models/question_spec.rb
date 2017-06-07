@@ -8,5 +8,6 @@ RSpec.describe Question, type: :model do
 
   context 'relations' do
     it { should have_many(:answers).dependent(:destroy) }
+    it { should belong_to :user }
   end
 end

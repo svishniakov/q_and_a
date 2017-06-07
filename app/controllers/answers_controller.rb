@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question, only: %i[index new create]
   before_action :set_answer, only: %i[show edit update destroy]
+  before_action :check_user, only: %i[edit update destroy]
 
   def index
     @answers = @question.answers
@@ -19,6 +20,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
     if @answer.save
       flash[:notice] = 'Answer was successully created!'
       redirect_to @answer
@@ -49,9 +51,11 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+    @user = @answer.user
+    @question ||= @answer.question
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, :user_id)
   end
 end

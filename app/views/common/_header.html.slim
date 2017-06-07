@@ -8,10 +8,15 @@ nav.nav.has-shadow
       span
     .nav-right.nav-menu
       span.nav-item
-        = link_to 'Ask question', new_question_path, class: 'button is-primary is-outlined'
-      = link_to 'Home', root_path, class: 'nav-item is-tab'
+        - if user_signed_in?
+          = link_to 'Ask question', new_question_path, class: 'button is-primary is-outlined'
+        = link_to 'Home', root_path, class: 'nav-item is-tab'
       a.nav-item.is-tab
         |  About
+    - if user_signed_in?
+      span.nav-item
+        = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'button is-info is-outlined'
+    - else
       span.nav-item
         = link_to 'Log in', new_user_session_path, class: 'button'
         = link_to 'Sign up', new_user_registration_path, class: 'button is-info'

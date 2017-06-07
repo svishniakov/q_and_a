@@ -17,7 +17,7 @@ User needs to be logged in to be able to ask questions
     visit new_user_session_path
     fill_in 'Email', with: 'wrong_user@test.com'
     fill_in 'Password', with: 'wrong_pass'
-    click_on 'Log in'
+    click_button 'Log in'
 
     expect(page).to have_content 'Invalid Email or password'
     expect(current_path).to eq new_user_session_path

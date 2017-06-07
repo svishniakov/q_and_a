@@ -1,0 +1,25 @@
+.section
+  .title
+    ' All questions
+  table.table
+    thead
+      tr
+        th Question
+        th User
+        th Created
+        th
+    tbody
+      - @questions.each do |question|
+        tr
+          td = question.title
+          td = question.user.email
+          td = question.created_at.strftime('%d %b %Y - %H:%M')
+          td
+            .field.has-addons
+              .control
+                = link_to 'Show', question_path(question), class: 'button is-primary is-outlined is-small'
+              .control
+                = link_to 'Edit', edit_question_path(question), class: 'button is-info is-outlined is-small'
+              .control
+                = link_to 'Delete', question_path(question), data: {confirm: 'Are you sure?'},\
+                                      method: :delete, class: 'button is-danger is-outlined is-small'

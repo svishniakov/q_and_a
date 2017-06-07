@@ -10,4 +10,17 @@
           .card-content
             .content
               = @question.body
+          .card-content
+            table.table
+              thead
+                tr
+                  th Answers
+                  th User
+                  th Date
+              tbody
+              - @question.answers.each do |answer|
+                tr
+                  td = answer.body
+                  td = answer.user.email
+                  td = answer.created_at
     .column.is-2

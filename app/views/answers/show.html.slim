@@ -1,0 +1,15 @@
+.section
+  .columns
+    .column.is-2
+    .column
+      .card
+        header
+          .card-header
+            .card-header-title
+              = @answer.question.title
+          .card-content
+            .content
+              p = @answer.body
+              p = @answer.user.email
+              p = @answer.created_at
+    .column.is-2

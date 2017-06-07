@@ -1,12 +1,14 @@
 nav.nav.has-shadow
   .container
     .nav-left
-      = link_to icon('comments fa-4x'), root_path
+      = link_to icon('comments fa-3x'), root_path, class: 'nav-item'
     span.nav-toggle
       span
       span
       span
     .nav-right.nav-menu
+      span.nav-item
+        = link_to 'Ask question', new_question_path, class: 'button is-primary is-outlined'
       = link_to 'Home', root_path, class: 'nav-item is-tab'
       a.nav-item.is-tab
         |  About

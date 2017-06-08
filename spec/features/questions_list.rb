@@ -8,15 +8,17 @@ Site visitor needs to have possibility to see all the questions
 
   scenario 'Registered user is trying to access list with all the questions' do
     sign_in(user)
-    visit root_path
-
-    expect(page).to have_content 'All questions'
-    expect(current_path).to eq questions_path
+    list_questions
   end
 
   scenario 'Not registered user is trying to access list with all the questions' do
-    visit root_path
+    list_questions
+  end
 
+  private
+
+  def list_questions
+    visit root_path
     expect(page).to have_content 'All questions'
     expect(current_path).to eq questions_path
   end

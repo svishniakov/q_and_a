@@ -7,22 +7,25 @@ feature 'Access question page with answers' do
 
   context 'As an anonymous' do
     scenario 'user can access question page to see the answers' do
-      visit question_path(question)
-      expect(page).to have_content question.title
-      question.answers.each do |answer|
-        expect(page).to have_content answer.body
-      end
+      list_answers
     end
   end
 
   context 'As registered user' do
     scenario 'user can access question page to see the answers' do
       sign_in(user)
-      visit question_path(question)
-      expect(page).to have_content question.title
-      question.answers.each do |answer|
-        expect(page).to have_content answer.body
-      end
+      list_answers
+    end
+  end
+
+  private
+
+  def list_answers
+    visit question_path(question)
+
+    expect(page).to have_content question.title
+    question.answers.each do |answer|
+      expect(page).to have_content answer.body
     end
   end
 end

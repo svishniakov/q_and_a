@@ -6,16 +6,19 @@ feature 'Visit question show page' do
   given(:user) { create(:user) }
 
   scenario 'Anonymous user needs to have possibility to open question page' do
-    visit question_path(question)
-    expect(page).to have_content 'Valid question title'
-    expect(page).to have_content 'Valid question body'
+    show_question
   end
 
   scenario 'Registered user needs to have possibility to open question page' do
     sign_in(user)
+    show_question
+  end
+
+  private
+
+  def show_question
     visit question_path(question)
     expect(page).to have_content 'Valid question title'
     expect(page).to have_content 'Valid question body'
   end
-
 end

@@ -30,7 +30,7 @@ class QuestionsController < ApplicationController
   def update
     if @question.update(question_params)
       flash[:success] = 'Question was successfully updated!'
-      redirect_to @question
+      redirect_to questions_path
     else
       render :edit
     end

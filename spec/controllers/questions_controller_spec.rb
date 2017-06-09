@@ -94,9 +94,9 @@ RSpec.describe QuestionsController, type: :controller do
           expect(user_question.body).to eq 'New body'
         end
 
-        it 'shows updated question' do
+        it 'shows list with updated question' do
           patch :update, params: { id: user_question, question: attributes_for(:question), user_id: current_user }
-          expect(response).to redirect_to question_path(assigns(:question))
+          expect(response).to redirect_to questions_path
         end
       end
 

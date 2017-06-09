@@ -23,4 +23,11 @@
                   td = answer.body
                   td = answer.user.email
                   td = answer.created_at
+            - if user_signed_in?
+              = form_for [@question, answer = @question.answers.new] do   |f|
+                = f.label 'Your answer'
+                = f.text_area :body, class: 'textarea', id: 'answer_body'
+                br
+                = submit_tag 'Post answer', class: 'button is-primary'
+
     .column.is-2

@@ -10,11 +10,9 @@ Registered and logged in user has to be able to post answer to the question
   scenario 'Post an answer as a registered user' do
     sign_in(user)
     visit question_path(question)
-
     expect(page).to have_content question.title
     expect(page).to have_content question.body
     expect(page).to have_field('answer_body')
-
     fill_in 'answer_body', with: 'My new answer!'
     click_on 'Post answer'
     expect(page).to have_content 'My new answer!'

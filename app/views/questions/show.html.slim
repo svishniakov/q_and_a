@@ -10,6 +10,9 @@
           .card-content
             .content
               = @question.body
+            .content
+            - if current_user == @question.user
+              = render 'questions/question_form_actions'
           .card-content
             table.table
               thead
@@ -17,12 +20,15 @@
                   th Answers
                   th User
                   th Date
+                  th
               tbody
               - @question.answers.each do |answer|
                 tr
                   td = answer.body
                   td = answer.user.email
                   td = answer.created_at
+                  td
+                    = render 'questions/answer_form_actions', answer: answer if current_user == answer.user
             - if user_signed_in?
               = form_for [@question, answer = @question.answers.new] do   |f|
                 = f.label 'Your answer'

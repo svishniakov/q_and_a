@@ -13,6 +13,7 @@ nav.nav.has-shadow
         = link_to 'Home', root_path, class: 'is-tab'
     - if user_signed_in?
       span.nav-item
+        = current_user.email
         = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'is-tab'
     - else
       span.nav-item

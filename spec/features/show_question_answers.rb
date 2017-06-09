@@ -22,7 +22,6 @@ feature 'Access question page with answers' do
 
   def list_answers
     visit question_path(question)
-
     expect(page).to have_content question.title
     question.answers.each do |answer|
       expect(page).to have_content answer.body

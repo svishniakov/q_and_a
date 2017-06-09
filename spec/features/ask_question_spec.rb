@@ -8,7 +8,6 @@ Logged in user needs to have possibility to access Ask question form
 
   scenario 'Registered user is trying to access Ask question form' do
     sign_in(user)
-
     visit root_path
     click_on 'Ask question'
     expect(current_path).to eq new_question_path

@@ -28,7 +28,13 @@
                   td = answer.user.email
                   td = answer.created_at
                   td
-                    = render 'questions/answer_form_actions', answer: answer if current_user == answer.user
+                    .field.has-addons
+                      - if user_signed_in? && current_user.author_of?(answer)
+                      .control
+                        = link_to 'Edit answer', edit_answer_path(answer), class: 'button is-info is-outlined is-small'
+                      .control
+                        = link_to 'Delete answer', answer_path(answer), data: {confirm: 'Are you sure?'}, \
+                                                                            method: :delete, class: 'button is-danger is-outlined is-small'
             - if user_signed_in?
               = form_for [@question, answer = @question.answers.new] do   |f|
                 = f.label 'Your answer'

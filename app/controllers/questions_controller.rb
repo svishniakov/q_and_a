@@ -44,6 +44,13 @@ class QuestionsController < ApplicationController
 
   private
 
+  def check_user
+    if @question.user != current_user
+      flash[:alert] = 'You have no sufficient rights to continue'
+      redirect_to @question
+    end
+  end
+
   def set_question
     @question = Question.find(params[:id])
     @user = @question.user

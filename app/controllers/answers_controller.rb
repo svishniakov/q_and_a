@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question, only: %i[index new create]
-  before_action :set_answer, only: %i[show edit update destroy]
+  before_action :set_answer_params, only: %i[show edit update destroy]
   before_action :check_user, only: %i[edit update destroy]
 
   def index
@@ -45,11 +45,18 @@ class AnswersController < ApplicationController
 
   private
 
+  def check_user
+    if @answer.user != current_user
+      flash[:alert] = 'You have no sufficient rights to continue'
+      redirect_to @question
+    end
+  end
+
   def set_question
     @question = Question.find(params[:question_id])
   end
 
-  def set_answer
+  def set_answer_params
     @answer = Answer.find(params[:id])
     @user = @answer.user
     @question ||= @answer.question

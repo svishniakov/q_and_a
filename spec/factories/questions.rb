@@ -3,17 +3,16 @@ FactoryGirl.define do
     title 'Valid question title'
     body 'Valid question body'
     user
-  end
 
-  factory :invalid_question, class: 'Question' do
-    title nil
-    body nil
-    user_id nil
-  end
+    factory :invalid_question do
+      title nil
+      body nil
+      user_id nil
+    end
 
-  factory :user_question, class: 'Question' do
-    title 'User question title'
-    body 'User question body'
-    user
+    factory :user_question do
+      title 'User question title'
+      body 'User question body'
+    end
   end
 end

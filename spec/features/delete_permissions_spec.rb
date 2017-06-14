@@ -5,19 +5,19 @@ Logged in user has to be able to delete his own question
 } do
 
   given(:user) { create(:user) }
-  given(:user_answer) { create(:user_two) }
+  given(:answer_user) { create(:answer_user) }
 
   context 'User not an author' do
     let(:question) { create(:question, user: user) }
     let(:answer) { create(:answer, question: question, user: user) }
     scenario 'User can not delete a question where he is not an author' do
-      sign_in(user_answer)
+      sign_in(answer_user)
       visit question_path(question)
       expect(page).to_not have_link 'Delete question'
     end
 
     scenario 'User can not delete an answer where he is not an author' do
-      sign_in(user_answer)
+      sign_in(answer_user)
       visit question_path(question)
       expect(page).to_not have_link 'Delete answer'
     end

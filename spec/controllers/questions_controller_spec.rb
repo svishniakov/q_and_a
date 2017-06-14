@@ -113,16 +113,30 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     describe 'DELETE #destroy' do
-      before { user_question }
+      context 'author' do
+        before { user_question }
+        it 'is trying to delete his own question' do
+          expect { delete :destroy, params: { id: user_question, user_id: current_user } }.to change(Question, :count).by(-1)
+        end
 
-      it 'destroy question' do
-        expect { delete :destroy, params: { id: user_question, user_id: current_user } }.to change(Question, :count).by(-1)
+        it 'redirects to index view' do
+          delete :destroy, params: { id: user_question, user_id: current_user }
+          expect(response).to redirect_to questions_path
+        end
       end
 
-      it 'redirects to index view' do
-        delete :destroy, params: { id: user_question, user_id: current_user }
-        expect(response).to redirect_to questions_path
+      context 'non-author' do
+        before { question }
+        it 'is trying to delete not his answer' do
+          expect { delete :destroy, params: { id: question, user_id: current_user } }.to_not change(Question, :count)
+        end
+
+        it 'and redirects to question show view' do
+          delete :destroy, params: { id: question, user_id: current_user }
+          expect(response).to redirect_to question_path(assigns(:question))
+        end
       end
+
     end
   end
 end

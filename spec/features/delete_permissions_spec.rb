@@ -32,7 +32,7 @@ Logged in user has to be able to delete his own question
       expect(page).to have_link 'Delete question'
     end
 
-    scenario 'User can delete an answer where he is not an author' do
+    scenario 'User can delete an answer where he is an author' do
       sign_in(user)
       visit question_path(question)
       question.answers.each do

@@ -119,15 +119,28 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     describe 'DELETE #destroy' do
-      before { user_answer }
+      context 'author' do
+        before { user_answer }
+        it 'is trying to delete his own answer' do
+          expect { delete :destroy, params: { id: user_answer, user_id: current_user } }.to change(Answer, :count).by(-1)
+        end
 
-      it 'answer destroy' do
-        expect { delete :destroy, params: { id: user_answer, user_id: current_user } }.to change(Answer, :count).by(-1)
+        it 'and redirects to index view' do
+          delete :destroy, params: { id: user_answer, user_id: current_user }
+          expect(response).to redirect_to questions_path
+        end
       end
 
-      it 'redirects to index view' do
-        delete :destroy, params: { id: user_answer, user_id: current_user }
-        expect(response).to redirect_to questions_path
+      context 'non-author' do
+        before { answer }
+        it 'is trying to delete not his answer' do
+          expect { delete :destroy, params: { id: answer, user_id: current_user } }.to_not change(Answer, :count)
+        end
+
+        it 'and redirects to question show view' do
+          delete :destroy, params: { id: answer, user_id: current_user }
+          expect(response).to redirect_to question_path(assigns(:question))
+        end
       end
     end
   end

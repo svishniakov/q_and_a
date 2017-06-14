@@ -3,13 +3,7 @@ FactoryGirl.define do
     "user#{n}@test.com"
   end
 
-  factory :user do
-    email
-    password '12345678'
-    password_confirmation '12345678'
-  end
-
-  factory :user_two, class: 'User' do
+  factory :user, aliases: [:user_two] do
     email
     password '12345678'
     password_confirmation '12345678'

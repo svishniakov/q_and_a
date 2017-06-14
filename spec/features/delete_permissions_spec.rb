@@ -24,18 +24,25 @@ Logged in user has to be able to delete his own question
   end
 
   context 'User as an author' do
+
+    before do
+      @answer_id = answer.id
+    end
+
     let(:question) { create(:question, user: user) }
     let(:answer) { create(:answer, question: question, user: user) }
     scenario 'User can delete only his own question' do
       sign_in(user)
       visit question_path(question)
-      expect(page).to have_link 'Delete question'
+      within("div#del_answer_#{@answer_id}") do
+        expect(page).to_not have_link 'Delete answer'
+      end
     end
 
     scenario 'User can delete an answer where he is an author' do
       sign_in(user)
       visit question_path(question)
-      question.answers.each do
+      within("div#del_answer_#{@answer_id}") do
         expect(page).to have_link 'Delete answer'
       end
     end

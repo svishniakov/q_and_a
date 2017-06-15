@@ -1,22 +1,8 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[index new create]
-  before_action :set_answer_params, only: %i[show edit update destroy]
+  before_action :authenticate_user!
+  before_action :set_question, only: %i[create]
+  before_action :set_answer_params, only: %i[edit update destroy]
   before_action :check_user, only: %i[edit update destroy]
-
-  def index
-    @answers = @question.answers
-  end
-
-  def show
-  end
-
-  def new
-    @answer = @question.answers.new
-  end
-
-  def edit
-  end
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -25,28 +11,30 @@ class AnswersController < ApplicationController
       flash[:notice] = 'Answer was successully created!'
       redirect_to question_path(@question)
     else
-      render :new
+      flash[:error] = 'Answer not saved'
+      redirect_to question_path(@question)
     end
   end
 
   def update
     if @answer.update(answer_params)
       flash[:notice] = 'Answer was successfully updated!'
-      redirect_to @answer
+      redirect_to question_path(@question)
     else
-      render :edit
+      flash[:error] = 'Answer not updated'
+      redirect_to question_path(@question)
     end
   end
 
   def destroy
     @answer.destroy
-    redirect_to questions_path
+    redirect_to question_path(@question)
   end
 
   private
 
   def check_user
-    if @answer.user != current_user
+    if current_user.author_of?(@answer)
       flash[:alert] = 'You have no sufficient rights to continue'
       redirect_to @question
     end
@@ -63,6 +51,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, :user_id)
+    params.require(:answer).permit(:body)
   end
 end

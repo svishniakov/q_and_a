@@ -11,8 +11,14 @@
             .content
               = @question.body
             .content
-            - if current_user == @question.user
-              = render 'questions/question_form_actions'
+            - if current_user.author_of?(@question)
+              .field.has-addons
+                .control
+                  = link_to 'Edit question', edit_question_path(@question),
+                          class: 'button is-info is-outlined is-small'
+                .control
+                  = link_to 'Delete question', question_path(@question),
+                          data: {confirm: 'Are you sure?'}, method: :delete, class: 'button is-danger is-outlined is-small'
           .card-content
             table.table
               thead
@@ -36,7 +42,7 @@
                         = link_to 'Delete answer', answer_path(answer), data: {confirm: 'Are you sure?'}, \
                                                                             method: :delete, class: 'button is-danger is-outlined is-small'
             - if user_signed_in?
-              = form_for [@question, answer = @question.answers.new] do   |f|
+              = form_for [@question, @question.answers.new] do   |f|
                 = f.label 'Your answer'
                 = f.text_area :body, class: 'textarea', id: 'answer_body'
                 br

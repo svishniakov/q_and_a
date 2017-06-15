@@ -45,7 +45,7 @@ class QuestionsController < ApplicationController
   private
 
   def check_user
-    if @question.user != current_user
+    unless current_user.author_of?(@question)
       flash[:alert] = 'You have no sufficient rights to continue'
       redirect_to @question
     end
@@ -57,6 +57,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, :user_id)
+    params.require(:question).permit(:title, :body)
   end
 end

@@ -6,7 +6,7 @@ RSpec.describe AnswersController, type: :controller do
 
   context 'as a registered user' do
     let(:current_user) { create(:user) }
-    let(:user_answer) { create(:answer) }
+    let(:user_answer) { create(:answer, question_id: question.id, user_id: current_user.id) }
 
     before do
       sign_in(current_user)
@@ -17,8 +17,7 @@ RSpec.describe AnswersController, type: :controller do
       context 'using valid attributes' do
         it 'saves new answer to db' do
           expect { post :create, params: { answer: attributes_for(:answer),
-                                           question_id: question,
-                                           user_id: current_user }
+                                           question_id: question }
             }.to change(question.answers, :count).by(1)
         end
 
@@ -45,7 +44,6 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     describe 'PATCH #update' do
-      before { user_answer }
       context 'using valid attributes' do
         it 'sets requested answer to an @answer' do
           patch :update, params: { id: user_answer,
@@ -88,7 +86,7 @@ RSpec.describe AnswersController, type: :controller do
       context 'author' do
         before { user_answer }
         it 'is trying to delete his own answer' do
-          expect { delete :destroy, params: { id: user_answer, user_id: current_user } }.to change(Answer, :count).by(-1)
+          expect { delete :destroy, params: { id: user_answer, user_id: current_user } }.to change(question.answers, :count).by(-1)
         end
 
         it 'and redirects to question view' do
@@ -100,7 +98,7 @@ RSpec.describe AnswersController, type: :controller do
       context 'non-author' do
         before { answer }
         it 'is trying to delete not his answer' do
-          expect { delete :destroy, params: { id: user_answer, user_id: current_user } }.to_not change(Answer, :count)
+          expect { delete :destroy, params: { id: user_answer, user_id: current_user } }.to_not change(question.answers, :count)
         end
 
         it 'and redirects to question show view' do

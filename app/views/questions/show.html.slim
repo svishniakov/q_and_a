@@ -11,7 +11,7 @@
             .content
               = @question.body
             .content
-            - if current_user.author_of?(@question)
+            - if user_signed_in? && current_user.author_of?(@question)
               .field.has-addons
                 .control
                   = link_to 'Edit question', edit_question_path(@question),

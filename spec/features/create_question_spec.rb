@@ -1,32 +1,35 @@
 require 'rails_helper'
 
-feature 'Create question', %q{
-Logged in user must have possibility to create a questions
-} do
+feature 'Post a question' do
 
   given(:user) { create(:user) }
 
-  context 'using valid attributes' do
+  context 'as a registered user' do
     let(:question) { create(:question) }
-    scenario 'Logged in user needs to have possibility to create question' do
+    before do
       sign_in(user)
       click_on 'Ask question'
+    end
+
+    scenario 'using valid attributes' do
       fill_in 'Title', with: question.title
       fill_in 'Body', with: question.body
       click_on 'Save question'
       expect(page).to have_content question.title
       expect(page).to have_content question.body
     end
-  end
 
-  context 'using invalid attributes' do
-    scenario 'Logged in user is trying to create a question' do
-      sign_in(user)
-      click_on 'Ask question'
+    scenario 'using invalid attributes' do
       fill_in 'Title', with: nil
       fill_in 'Body', with: nil
       click_on 'Save question'
       expect(page).to have_content 'There are few errors prohibited this form from being saved'
     end
+  end
+
+
+  scenario 'as an anonymous user using Ask question form' do
+    visit root_path
+    expect(page).to_not have_link 'Ask question'
   end
 end

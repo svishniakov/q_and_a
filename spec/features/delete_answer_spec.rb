@@ -22,9 +22,10 @@ feature 'Possibility to delete answer' do
       visit question_path(question)
     end
 
-    scenario 'is able to access answer delete link' do
+    scenario 'is able to delete answer' do
       within("div#del_answer_#{answer.id}") do
-        expect(page).to have_link 'Delete answer'
+        click_on 'Delete answer'
+        expect(page).to_not have_content answer.body
       end
     end
 

@@ -23,7 +23,8 @@ feature 'Post a question' do
       fill_in 'Title', with: nil
       fill_in 'Body', with: nil
       click_on 'Save question'
-      expect(page).to have_content 'There are few errors prohibited this form from being saved'
+      expect(page).to have_content 'Title can\'t be blank'
+      expect(page).to have_content 'Body can\'t be blank'
     end
   end
 

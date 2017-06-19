@@ -20,16 +20,18 @@ feature 'Possibility to delete question' do
       sign_in(user)
     end
 
-    scenario 'is able to access question delete link on index page' do
+    scenario 'is able to delete question on index page' do
       visit questions_path
       within("div#del_question_#{question.id}") do
-        expect(page).to have_link 'Delete'
+        click_on 'Delete'
+        expect(page).to_not have_content question.title
       end
     end
 
-    scenario 'is able to access question delete link on show page' do
+    scenario 'is able to delete question question from show page' do
       visit question_path(question)
-      expect(page).to have_link 'Delete question'
+      click_on 'Delete question'
+      expect(page).to have_content 'Question successfully deleted'
     end
 
     scenario 'is able to delete question' do

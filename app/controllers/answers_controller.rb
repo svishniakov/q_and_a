@@ -11,19 +11,18 @@ class AnswersController < ApplicationController
       flash[:notice] = 'Answer was successully created!'
       redirect_to question_path(@question)
     else
-      flash[:error] = 'Answer not saved'
-      redirect_to question_path(@question)
+      render 'questions/show'
     end
+
   end
 
   def update
     if @answer.update(answer_params)
       flash[:notice] = 'Answer was successfully updated!'
-      redirect_to question_path(@question)
     else
-      flash[:error] = 'Answer not updated'
-      redirect_to question_path(@question)
+      flash[:error] = 'Answer not updated!'
     end
+    render 'questions/show'
   end
 
   def destroy

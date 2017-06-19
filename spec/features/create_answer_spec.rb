@@ -21,7 +21,7 @@ feature 'Post an answer' do
     scenario 'using invalid attributes' do
       fill_in 'answer_body', with: nil
       click_on 'Post answer'
-      expect(page).to have_content 'Answer not saved'
+      expect(page).to have_content 'Body can\'t be blank'
     end
   end
 

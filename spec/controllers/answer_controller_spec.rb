@@ -10,7 +10,6 @@ RSpec.describe AnswersController, type: :controller do
 
     before do
       sign_in(current_user)
-      allow(controller).to receive(:current_user).and_return current_user
     end
 
     describe 'POST #create' do
@@ -19,6 +18,12 @@ RSpec.describe AnswersController, type: :controller do
           expect { post :create, params: { answer: attributes_for(:answer),
                                            question_id: question }
             }.to change(question.answers, :count).by(1)
+        end
+
+        it 'related to logged-in user' do
+          expect { post :create, params: { answer: attributes_for(:answer),
+                                           question_id: question}
+            }.to change(current_user.answers, :count).by(1)
         end
 
         it 'redirects to show view' do
@@ -38,7 +43,7 @@ RSpec.describe AnswersController, type: :controller do
         it 're-render question page with answers' do
           post :create, params: { answer: attributes_for(:invalid_question),
                                   question_id: question }
-          expect(response).to redirect_to question_path(assigns(:question))
+          expect(response).to render_template 'questions/show'
         end
       end
     end
@@ -67,7 +72,7 @@ RSpec.describe AnswersController, type: :controller do
                                    answer: attributes_for(:answer),
                                    question_id: question,
                                    user_id: current_user }
-          expect(response).to redirect_to question_path(assigns(:question))
+          expect(response).to render_template 'questions/show'
         end
       end
 
@@ -98,7 +103,7 @@ RSpec.describe AnswersController, type: :controller do
       context 'non-author' do
         before { answer }
         it 'is trying to delete not his answer' do
-          expect { delete :destroy, params: { id: user_answer, user_id: current_user } }.to_not change(question.answers, :count)
+          expect { delete :destroy, params: { id: user_answer, user_id: current_user } }.to_not change(Answer, :count)
         end
 
         it 'and redirects to question show view' do

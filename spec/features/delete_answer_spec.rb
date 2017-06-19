@@ -2,9 +2,9 @@ require 'rails_helper'
 
 feature 'Possibility to delete answer' do
 
-  given!(:user) { create(:user) }
-  given!(:answer_user) { create(:user) }
-  given!(:question) { create(:question, user: user) }
+  given(:user) { create(:user) }
+  given(:answer_user) { create(:user) }
+  given(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, question: question, user: user) }
 
   context 'when the logged in user not an author' do

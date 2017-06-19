@@ -6,7 +6,7 @@ RSpec.describe AnswersController, type: :controller do
 
   context 'as a registered user' do
     sign_in_user
-    let(:user_answer) { create(:answer, question_id: question.id, user_id: @user.id) }
+    let(:user_answer) { create(:answer, question_id: question.id, user: @user) }
 
     describe 'POST #create' do
       context 'using valid attributes' do
@@ -84,7 +84,7 @@ RSpec.describe AnswersController, type: :controller do
       context 'author' do
         before { user_answer }
         it 'is trying to delete his own answer' do
-          expect { delete :destroy, params: { id: user_answer } }.to change(question.answers, :count).by(-1)
+          expect { delete :destroy, params: { id: user_answer } }.to change(Answer, :count).by(-1)
         end
 
         it 'and redirects to question view' do

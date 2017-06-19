@@ -44,7 +44,7 @@
                                                                               method: :delete, class: 'button is-danger is-outlined is-small'
             - if user_signed_in?
               = form_for [@question, @answer] do |f|
-                = render 'common/errors', resource: @answer if @answer
+                = render 'common/errors', resource: @answer
                 = f.label 'Your answer'
                 = f.text_area :body, class: 'textarea', id: 'answer_body'
                 br

@@ -2,9 +2,9 @@ require 'rails_helper'
 
 feature 'Possibility to delete question' do
 
-  given(:user) { create(:user) }
-  given(:answer_user) { create(:answer_user) }
-  given(:question) { create(:question, user: user) }
+  given!(:user) { create(:user) }
+  given!(:answer_user) { create(:user) }
+  given!(:question) { create(:question, user: user) }
 
   context 'when the logged in user as not an author' do
     scenario 'is not able to access question delete link' do
@@ -16,7 +16,6 @@ feature 'Possibility to delete question' do
 
   context 'when the logged in user as an author' do
     before do
-      question
       sign_in(user)
     end
 
@@ -28,13 +27,7 @@ feature 'Possibility to delete question' do
       end
     end
 
-    scenario 'is able to delete question question from show page' do
-      visit question_path(question)
-      click_on 'Delete question'
-      expect(page).to have_content 'Question successfully deleted'
-    end
-
-    scenario 'is able to delete question' do
+    scenario 'is able to delete question question on show page' do
       visit question_path(question)
       click_on 'Delete question'
       expect(page).to have_content 'Question successfully deleted'

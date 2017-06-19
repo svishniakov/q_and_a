@@ -1,6 +1,10 @@
 FactoryGirl.define do
+  sequence :title do |n|
+    "Question #{n} title"
+  end
+
   factory :question do
-    title 'Valid question title'
+    title
     body 'Valid question body'
     user
 

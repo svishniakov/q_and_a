@@ -18,7 +18,7 @@ feature 'Visit question show page' do
 
   def show_question
     visit question_path(question)
-    expect(page).to have_content 'Valid question title'
-    expect(page).to have_content 'Valid question body'
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
   end
 end

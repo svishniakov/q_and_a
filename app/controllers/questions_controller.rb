@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    @answer = @question.answers.new
   end
 
   def new
@@ -53,7 +54,6 @@ class QuestionsController < ApplicationController
 
   def set_question
     @question = Question.find(params[:id])
-    @user = @question.user
   end
 
   def question_params

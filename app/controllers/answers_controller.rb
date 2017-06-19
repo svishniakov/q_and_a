@@ -46,7 +46,6 @@ class AnswersController < ApplicationController
 
   def set_answer_params
     @answer = Answer.find(params[:id])
-    @user = @answer.user
     @question ||= @answer.question
   end
 

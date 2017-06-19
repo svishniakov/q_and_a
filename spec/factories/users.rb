@@ -3,7 +3,7 @@ FactoryGirl.define do
     "user#{n}@test.com"
   end
 
-  factory :user, aliases: [:answer_user] do
+  factory :user do
     email
     password '12345678'
     password_confirmation '12345678'

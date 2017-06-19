@@ -28,7 +28,7 @@ feature 'Post an answer' do
   context 'as an anonymous user' do
     scenario 'Post an answer as an anonymous user' do
       visit question_path(question)
-      expect(page).to_not have_field('answer_body')
+      expect(page).to_not have_link 'Post answer'
     end
   end
 end

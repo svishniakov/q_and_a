@@ -28,13 +28,8 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   context 'as a registered user' do
-    let(:current_user) { create(:user) }
-    let(:user_question) { create(:user_question, user_id: current_user.id) }
-
-    before do
-      sign_in(current_user)
-      allow(controller).to receive(:current_user).and_return current_user
-    end
+    sign_in_user
+    let(:user_question) { create(:user_question, user_id: @user.id) }
 
     describe 'GET #new' do
       before { get :new }
@@ -59,11 +54,11 @@ RSpec.describe QuestionsController, type: :controller do
     describe 'POST #create' do
       context 'using valid attributes' do
         it 'save new question to db' do
-          expect { post :create, params: { question: attributes_for(:question) } }.to change(current_user.questions, :count).by(1)
+          expect { post :create, params: { question: attributes_for(:question) } }.to change(@user.questions, :count).by(1)
         end
 
         it 'redirects to show view' do
-          post :create, params: { question: attributes_for(:question), user_id: current_user }
+          post :create, params: { question: attributes_for(:question) }
           expect(response).to redirect_to question_path(assigns(:question))
         end
       end
@@ -83,19 +78,19 @@ RSpec.describe QuestionsController, type: :controller do
     describe 'PATCH #update' do
       context 'using valid attributes' do
         it 'sets requested user_question to @question' do
-          patch :update, params: { id: user_question, question: attributes_for(:user_question), user_id: current_user }
+          patch :update, params: { id: user_question, question: attributes_for(:user_question) }
           expect(assigns(:question)).to eq user_question
         end
 
         it 'updates question attributes' do
-          patch :update, params: { id: user_question, question: {title: 'New title', body: 'New body', user_id: current_user } }
+          patch :update, params: { id: user_question, question: {title: 'New title', body: 'New body' } }
           user_question.reload
           expect(user_question.title).to eq 'New title'
           expect(user_question.body).to eq 'New body'
         end
 
         it 'shows list with updated question' do
-          patch :update, params: { id: user_question, question: attributes_for(:question), user_id: current_user }
+          patch :update, params: { id: user_question, question: attributes_for(:question) }
           expect(response).to redirect_to questions_path
         end
       end
@@ -116,11 +111,11 @@ RSpec.describe QuestionsController, type: :controller do
       context 'author' do
         before { user_question }
         it 'is trying to delete his own question' do
-          expect { delete :destroy, params: { id: user_question, user_id: current_user } }.to change(Question, :count).by(-1)
+          expect { delete :destroy, params: { id: user_question } }.to change(Question, :count).by(-1)
         end
 
         it 'redirects to index view' do
-          delete :destroy, params: { id: user_question, user_id: current_user }
+          delete :destroy, params: { id: user_question }
           expect(response).to redirect_to questions_path
         end
       end
@@ -128,11 +123,11 @@ RSpec.describe QuestionsController, type: :controller do
       context 'non-author' do
         before { question }
         it 'is trying to delete not his answer' do
-          expect { delete :destroy, params: { id: question, user_id: current_user } }.to_not change(Question, :count)
+          expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
         end
 
         it 'and redirects to question show view' do
-          delete :destroy, params: { id: question, user_id: current_user }
+          delete :destroy, params: { id: question }
           expect(response).to redirect_to question_path(assigns(:question))
         end
       end

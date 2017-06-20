@@ -1,11 +1,14 @@
 class QuestionsController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
   before_action :set_question, only: %i[show edit update destroy]
+  before_action :check_user, only: %i[edit update destroy]
 
   def index
     @questions = Question.all
   end
 
   def show
+    @answer = @question.answers.new
   end
 
   def new
@@ -16,9 +19,9 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
     if @question.save
-      flash[:notice] = 'Question was successfully created!'
+      flash[:success] = 'Question successfully created!'
       redirect_to @question
     else
       render :new
@@ -27,8 +30,8 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update(question_params)
-      flash[:notice] = 'Question was successfully updated!'
-      redirect_to @question
+      flash[:success] = 'Question successfully updated!'
+      redirect_to questions_path
     else
       render :edit
     end
@@ -36,11 +39,18 @@ class QuestionsController < ApplicationController
 
   def destroy
     @question.destroy
-    flash[:notice] = 'Question was successfully deleted!'
+    flash[:notice] = 'Question successfully deleted!'
     redirect_to questions_path
   end
 
   private
+
+  def check_user
+    unless current_user.author_of?(@question)
+      flash[:alert] = 'You have no sufficient rights to continue'
+      redirect_to @question
+    end
+  end
 
   def set_question
     @question = Question.find(params[:id])

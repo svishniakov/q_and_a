@@ -1,0 +1,21 @@
+nav.nav.has-shadow
+  .container
+    .nav-left
+      = link_to icon('comments fa-3x'), root_path, class: 'nav-item'
+    span.nav-toggle
+      span
+      span
+      span
+    .nav-right.nav-menu
+      span.nav-item
+        - if user_signed_in?
+          = link_to 'Ask question', new_question_path, class: 'is-tab'
+        = link_to 'Home', root_path, class: 'is-tab'
+    - if user_signed_in?
+      span.nav-item
+        = current_user.email
+        = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'is-tab'
+    - else
+      span.nav-item
+        = link_to 'Log in', new_user_session_path, class: 'is-tab'
+        = link_to 'Sign up', new_user_registration_path, class: 'is-tab'

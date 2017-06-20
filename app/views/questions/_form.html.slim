@@ -1,0 +1,13 @@
+= form_for @question do |f|
+  = render 'common/errors', resource: @question
+  .field
+    .label
+      = f.label :title
+    .control
+      = f.text_field :title, placeholder: 'Question title', class: 'input'
+  .field
+    .label
+      = f.label :body
+    .control
+      = f.text_area :body, placeholder: 'Question body', class: 'textarea'
+  = f.submit 'Save question', class: 'button is-primary'

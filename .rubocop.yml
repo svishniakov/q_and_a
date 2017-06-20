@@ -25,3 +25,8 @@ Style/StringLiterals:
 
 Style/EmptyMethod:
   EnforcedStyle: expanded
+
+Layout/MultilineBlockLayout:
+  Enabled: false
+
+#Layout/Align

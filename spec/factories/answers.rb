@@ -1,11 +1,17 @@
 FactoryGirl.define do
   factory :answer do
-    body 'Valid answer body'
+    sequence(:body) { |n| "Answer #{n} body"}
     question
-  end
+    user
 
-  factory :invalid_answer, class: 'Answer' do
-    body nil
-    question_id nil
+    factory :invalid_answer do
+      body nil
+      question_id nil
+      user nil
+    end
+
+    factory :user_answer do
+      body 'User answer body'
+    end
   end
 end

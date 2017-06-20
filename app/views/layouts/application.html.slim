@@ -6,4 +6,7 @@ html lang="en"
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
+    = render 'common/header'
+    = render 'common/messages'
     = yield
+    = render 'common/footer'

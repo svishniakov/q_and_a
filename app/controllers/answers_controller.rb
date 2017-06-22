@@ -9,11 +9,9 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     if @answer.save
       flash[:notice] = 'Answer was successully created!'
-      redirect_to question_path(@question)
     else
       render 'questions/show'
     end
-
   end
 
   def update

@@ -28,26 +28,12 @@
                   th Date
                   th
               tbody
-              - @question.answers.each do |answer|
-                - if answer.persisted?
-                  tr
-                    td = answer.body
-                    td = answer.user.email
-                    td = answer.created_at
-                    td
-                      .field.has-addons
-                      - if user_signed_in? && current_user.author_of?(answer)
-                        .control
-                          = link_to 'Edit answer', edit_answer_path(answer), class: 'button is-info is-outlined is-small'
-                        .control id="del_answer_#{answer.id}"
-                          = link_to 'Delete answer', answer_path(answer), data: {confirm: 'Are you sure?'}, \
-                                                                              method: :delete, class: 'button is-danger is-outlined is-small'
+                = render 'questions/answers'
             - if user_signed_in?
-              = form_for [@question, @answer] do |f|
+              = form_for [@question, @answer], remote: true do |f|
                 = render 'common/errors', resource: @answer
-                = f.label 'Your answer'
+                = f.label :body, 'Your answer'
                 = f.text_area :body, class: 'textarea', id: 'answer_body'
                 br
                 = submit_tag 'Post answer', class: 'button is-primary'
-
     .column.is-2

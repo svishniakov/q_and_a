@@ -15,7 +15,11 @@ feature 'Post an answer' do
     scenario 'using valid attributes' do
       fill_in 'answer_body', with: 'My new answer!'
       click_on 'Post answer'
-      expect(page).to have_content 'My new answer!'
+
+      expect(current_path).to eq question_path(question)
+      within '#answers' do
+        expect(page).to have_content 'My new answer!'
+      end
     end
 
     scenario 'using invalid attributes' do

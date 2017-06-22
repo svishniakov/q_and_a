@@ -1,0 +1,16 @@
+- if question.persisted?
+  .card-header
+    .card-header-title
+      = question.title
+    .card-content
+      .content
+        = question.body
+      .content
+      - if user_signed_in? && current_user.author_of?(question)
+        .field.has-addons
+          .control
+            = link_to 'Edit question', edit_question_path(question),
+                    class: 'button is-info is-outlined is-small'
+          .control
+            = link_to 'Delete question', question_path(question),
+                    data: {confirm: 'Are you sure?'}, method: :delete, class: 'button is-danger is-outlined is-small'

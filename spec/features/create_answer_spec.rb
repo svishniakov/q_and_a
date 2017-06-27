@@ -1,9 +1,9 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
-feature 'Post an answer' do
+feature 'Create an answer' do
 
-  given(:user) {create(:user)}
-  given!(:question) {create(:question)}
+  given(:user) { create(:user) }
+  given!(:question) { create(:question) }
 
 
   context 'as a registered user' do

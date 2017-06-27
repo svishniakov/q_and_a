@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Access question page with answers' do
   given(:user) { create(:user) }

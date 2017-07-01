@@ -22,12 +22,11 @@ feature 'Create an answer' do
       end
     end
 
-    # http://connect.thinknetica.com/t/zanyatie-6-ajax-chast-1-voprosy-i-kommentarii/416/3?u=sergey_vishniakov
-    # scenario 'using invalid attributes', js: true do
-    #   fill_in 'answer_body', with: nil
-    #   click_on 'Post answer'
-    #   expect(page).to have_content 'Body can\'t be blank'
-    # end
+    scenario 'using invalid attributes', js: true do
+      fill_in 'answer_body', with: nil
+      click_on 'Post answer'
+      expect(page).to have_content 'Body can\'t be blank'
+    end
   end
 
   context 'as an anonymous user' do

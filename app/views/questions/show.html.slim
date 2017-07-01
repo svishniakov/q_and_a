@@ -17,7 +17,6 @@
                 = render @question.answers
             - if user_signed_in?
               = form_for [@question, @answer], remote: true do |f|
-                = render 'common/errors', resource: @answer
                 = f.label :body, 'Your answer'
                 = f.text_area :body, class: 'textarea', id: 'answer_body'
                 br

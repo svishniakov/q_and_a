@@ -7,11 +7,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-    if @answer.save
-      flash[:notice] = 'Answer was successully created!'
-    else
-      render 'questions/show'
-    end
+    @answer.save
   end
 
   def update

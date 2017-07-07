@@ -31,12 +31,14 @@ RSpec.describe AnswersController, type: :controller do
 
       context 'using invalid attributes' do
         it 'failed to save answer to db' do
-          expect { post :create, params: { answer: attributes_for(:invalid_answer), question_id: question, format: :js }
+          expect { post :create, params: { answer: attributes_for(:invalid_answer),
+                                           question_id: question, format: :js }
             }.to_not change(Answer, :count)
         end
 
         it 'render answers create form' do
-          post :create, params: { answer: attributes_for(:invalid_question), question_id: question, format: :js }
+          post :create, params: { answer: attributes_for(:invalid_question),
+                                  question_id: question, format: :js }
           expect(response).to render_template :create
         end
       end

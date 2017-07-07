@@ -13,7 +13,7 @@
                   th User
                   th Date
                   th
-              tbody
+              tbody id="answer_#{@answer.id}"
                 = render @question.answers
             - if user_signed_in?
               = form_for [@question, @answer], remote: true do |f|

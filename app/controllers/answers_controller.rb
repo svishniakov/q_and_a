@@ -11,12 +11,7 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if @answer.update(answer_params)
-      flash[:notice] = 'Answer was successfully updated!'
-    else
-      flash[:error] = 'Answer not updated!'
-    end
-    render 'questions/show'
+    @answer.update(answer_params)
   end
 
   def destroy

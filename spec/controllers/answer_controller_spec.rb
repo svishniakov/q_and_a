@@ -49,14 +49,14 @@ RSpec.describe AnswersController, type: :controller do
         it 'sets requested answer to an @answer' do
           patch :update, params: { id: user_answer,
                                    answer: attributes_for(:answer),
-                                   question_id: question }
+                                   question_id: question, format: :js }
           expect(assigns(:answer)).to eq user_answer
         end
 
         it 'updates answer attributes' do
           patch :update, params: {
             id: user_answer, answer: { body: 'New answer body',
-                                       question_id: question } }
+                                       question_id: question }, format: :js }
           user_answer.reload
           expect(user_answer.body).to eq 'New answer body'
         end
@@ -64,8 +64,8 @@ RSpec.describe AnswersController, type: :controller do
         it 'shows updated answer' do
           patch :update, params: { id: user_answer,
                                    answer: attributes_for(:answer),
-                                   question_id: question }
-          expect(response).to render_template 'questions/show'
+                                   question_id: question, format: :js }
+          expect(response).to render_template :update
         end
       end
 

@@ -19,3 +19,11 @@ $(document).on('click', '.notification > button.delete', function() {
     $(this).parent().addClass('is-hidden');
     return false;
 });
+
+$(document).on('click', '.edit-answer-link', function(e) {
+    var answer_id;
+    e.preventDefault();
+    $(this).hide();
+    answer_id = $(this).data('answerId');
+    return $('form#edit_answer_' + answer_id).show();
+});

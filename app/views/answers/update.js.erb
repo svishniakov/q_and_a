@@ -1,0 +1,7 @@
+$('.errors').remove();
+$('.messages').remove();
+<% if @answer.errors.present? %>
+  $('#answer_body').before('<%= j render 'common/errors', resource: @answer %>');
+<% else %>
+  $('tr#answer_<%= @answer.id %>').html('<%= j render @answer %>');
+<% end %>

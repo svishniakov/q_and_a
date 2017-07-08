@@ -84,7 +84,7 @@ RSpec.describe AnswersController, type: :controller do
       context 'author' do
         before { user_answer }
         it 'is trying to delete his own answer' do
-          expect { delete :destroy, params: { id: user_answer } }.to change(Answer, :count).by(-1)
+          expect { delete :destroy, params: { id: user_answer }, format: :js }.to change(Answer, :count).by(-1)
         end
 
         it 'and redirects to question view' do

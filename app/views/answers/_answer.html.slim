@@ -7,10 +7,11 @@
       - if user_signed_in? && current_user.author_of?(answer)
         .field.has-addons
           .control
-            = link_to 'Edit answer', '', class: 'button is-info is-outlined is-small edit-answer-link', data: {answer_id: answer.id}
+            = link_to 'Edit answer', '', class: 'button is-info is-outlined is-small edit-answer-link',\
+                                         data: {answer_id: answer.id}
           .control id="del_answer_#{answer.id}"
-            = link_to 'Delete answer', answer_path(answer), data: {confirm: 'Are you sure?'}, \
-                                                                                      method: :delete, class: 'button is-danger is-outlined is-small'
+            = link_to 'Delete answer', answer, remote: true, data: {confirm: 'Are you sure?'}, \
+                                       method: :delete, class: 'button is-danger is-outlined is-small'
 
         = form_for answer, html: {id: "edit_answer_#{answer.id}"}, remote: true do |f|
           = f.label :body, 'Edit answer'

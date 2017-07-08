@@ -105,5 +105,18 @@ RSpec.describe AnswersController, type: :controller do
         end
       end
     end
+
+    describe 'PATCH #best' do
+      sign_in_user
+      let(:question) { create :question, answers: create_list(:answer, 2) }
+      let(:question_user) { create :question, answers: create_list(:answer, 2), user: @user }
+
+      context 'as a question author' do
+        it 'set best answer from the list of available answers' do
+          patch :best, params: { id: question.answers.first }, format: :js
+          expect(assigns(:answer).best!).to eq true
+        end
+      end
+    end
   end
 end

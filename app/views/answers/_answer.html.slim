@@ -1,5 +1,14 @@
 - if answer.persisted?
   tr id="answer_#{answer.id}"
+    - if answer.best?
+      td.best
+        = icon('check fa-lg')
+    - elsif user_signed_in? && current_user.author_of?(answer.question)
+      td
+        = link_to icon('check fa-lg'), best_answer_path(answer), title: 'Mark as best', \
+                  data: { answer_id: answer.id }, remote: true, method: :patch, id: 'best-answer-link'
+    - else
+      td
     td = answer.body
     td = answer.user.email
     td = answer.created_at.strftime('%B %d, %Y - %H:%M')

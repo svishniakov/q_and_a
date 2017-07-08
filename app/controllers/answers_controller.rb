@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: %i[create]
-  before_action :set_answer_params, only: %i[edit update destroy]
+  before_action :set_answer_params, only: %i[edit update destroy best]
   before_action :check_user, only: %i[edit update destroy]
 
   def create
@@ -18,6 +18,10 @@ class AnswersController < ApplicationController
     @answer.destroy
     flash[:notice] = 'Answer successfully deleted'
     redirect_to question_path(@question)
+  end
+
+  def best
+    @answer.best! if current_user.author_of?(@answer.question)
   end
 
   private

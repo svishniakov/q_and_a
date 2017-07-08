@@ -5,7 +5,6 @@ feature 'Create an answer' do
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
 
-
   context 'as a registered user' do
     before do
       sign_in(user)

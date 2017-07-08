@@ -7,14 +7,9 @@
           = render @question
           .card-content
             table.table#answers
-              thead
-                tr
-                  th Answer
-                  th User
-                  th Date
-                  th
+              = render 'answers/answer_table'
               tbody
-                = render @question.answers
+                = render @question.answers.best
             - if user_signed_in?
               = form_for [@question, @answer], remote: true do |f|
                 = f.label :body, 'Your answer'

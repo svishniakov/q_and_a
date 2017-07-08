@@ -14,5 +14,5 @@
 
         = form_for answer, html: {id: "edit_answer_#{answer.id}"}, remote: true do |f|
           = f.label :body, 'Edit answer'
-          = f.text_area :body
-          = f.submit 'Save'
+          = f.text_area :body, class: 'textarea'
+          = f.submit 'Save', class: 'button is-primary'

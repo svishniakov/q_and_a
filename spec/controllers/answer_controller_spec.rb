@@ -116,6 +116,19 @@ RSpec.describe AnswersController, type: :controller do
           patch :best, params: { id: question.answers.first }, format: :js
           expect(assigns(:answer).best!).to eq true
         end
+
+        it 'should render best template' do
+          patch :best, params: { id: question.answers.first }, format: :js
+          expect(response).to render_template :best
+        end
+      end
+
+      context 'when user is not an author' do
+        before { patch :best, params: { id: question.answers.first }, format: :js }
+
+        it 'can not set answer as a best' do
+          expect(assigns(:answer).best).to eq false
+        end
       end
     end
   end

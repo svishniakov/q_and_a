@@ -14,5 +14,15 @@ FactoryGirl.define do
       title 'User question title'
       body 'User question body'
     end
+
+    factory :question_with_answers do
+      transient do
+        answers_count 5
+      end
+
+      after(:create) do |question, evaluator|
+        create_list(:answer, evaluator.answers_count, question: question, user: question.user)
+      end
+    end
   end
 end

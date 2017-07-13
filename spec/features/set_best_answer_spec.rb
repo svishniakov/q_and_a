@@ -13,11 +13,10 @@ feature 'Set best answer', %q{
       sign_in(question_user)
       visit question_path(question)
 
-      best_answer = question.answers.pluck(:id).first
+      best_answer = question.answers.last.id
 
       within "tr#answer_#{best_answer}" do
-        expect(page).to have_link 'Mark as best'
-        page.execute_script('$("#best-answer-link").click()')
+        click_on 'Best?'
         expect(page).to have_css 'td.best'
       end
     end

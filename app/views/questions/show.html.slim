@@ -7,9 +7,9 @@
           = render @question
           .card-content
             table.table#answers
-              = render 'answers/answer_table'
+              = render 'answers/answer_table_header'
               tbody
-                = render @question.answers.best
+                = render @question.answers.best_first
             - if user_signed_in?
               = form_for [@question, @answer], remote: true do |f|
                 = f.label :body, 'Your answer'

@@ -21,9 +21,8 @@ $(document).on('click', '.notification > button.delete', function() {
 });
 
 $(document).on('click', '.edit-answer-link', function(e) {
-    var answer_id;
     e.preventDefault();
     $(this).hide();
-    answer_id = $(this).data('answerId');
-    return $('form#edit_answer_' + answer_id).show();
+    var answerId = $(this).data('answerId');
+    return $('form#edit_answer_' + answerId).show();
 });

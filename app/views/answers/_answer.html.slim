@@ -5,15 +5,15 @@
         = icon('check fa-lg')
     - elsif user_signed_in? && current_user.author_of?(answer.question)
       td
-        = link_to icon('check fa-lg'), best_answer_path(answer), title: 'Mark as best', \
-                  data: { answer_id: answer.id }, remote: true, method: :patch, id: 'best-answer-link'
+        = link_to 'Best?', best_answer_path(answer), data: { answer_id: answer.id },\
+                           remote: true, method: :patch, id: 'best-answer-link', class: 'button is-small'
     - else
       td
     td = answer.body
     td = answer.user.email
     td = answer.created_at.strftime('%B %d, %Y - %H:%M')
     td
-      - if user_signed_in? && current_user.author_of?(answer)
+      - if current_user&.author_of?(answer)
         .field.has-addons
           .control
             = link_to 'Edit answer', '', class: 'button is-info is-outlined is-small edit-answer-link',\

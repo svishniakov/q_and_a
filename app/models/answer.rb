@@ -2,7 +2,7 @@ class Answer < ApplicationRecord
   belongs_to :question
   belongs_to :user
 
-  scope :best, -> { order(best: :desc) }
+  scope :best_first, -> { order(best: :desc) }
 
   validates :body, presence: true
 

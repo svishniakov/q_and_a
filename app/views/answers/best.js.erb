@@ -1,8 +1,4 @@
 $('.errors').remove();
 $('.messages').remove();
-<% if @answer.errors.present? %>
-  $('#answer_body').before('<%= j render 'common/errors', resource: @answer %>');
-<% else %>
-  $('#answers').html('<%= j render 'answer_table' %>')
-  $('#answers').append('<%= j render @answer.question.answers.best %>');
-<% end %>
+$('#answers').html('<%= j render 'answer_table_header' %>')
+$('#answers').append('<%= j render @answer.question.answers.best_first %>');

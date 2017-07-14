@@ -10,29 +10,27 @@ RSpec.describe Answer, type: :model do
     it { should belong_to :user }
   end
 
-  let(:question) { create :question_with_answers }
-  let(:first_best_answer) { question.answers.first }
-  let(:second_best_answer) { question.answers.second }
+  context 'methods ans scopes' do
+    let(:question) { create :question_with_answers }
+    let(:first_best_answer) { question.answers.first }
+    let(:second_best_answer) { question.answers.second }
+    let(:default_best_answer) { question.answers.last }
 
-  describe 'best! method' do
+    describe 'best! method' do
+      it 'sets first answer as a best' do
+        first_best_answer.best!
+        expect(first_best_answer).to be_best
+      end
 
-    it 'sets first answer as a best' do
-      first_best_answer.best!
-      expect(first_best_answer).to be_best
+      it 'sets second answer as a best' do
+        second_best_answer.best!
+        expect(default_best_answer).to_not be_best
+      end
     end
 
-    it 'sets second answer as a best' do
-      second_best_answer.best!
-      expect(second_best_answer).to be_best
-      expect(first_best_answer).to_not be_best
-    end
-  end
-
-  describe 'scopes' do
     describe '.best_first' do
       it 'should show best answer on the top of the list' do
-        second_best_answer.best!
-        expect(question.answers.best_first.first).to eq second_best_answer
+        expect(question.answers.best_first.first).to eq default_best_answer
       end
     end
   end

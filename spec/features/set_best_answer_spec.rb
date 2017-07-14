@@ -9,15 +9,20 @@ feature 'Set best answer', %q{
   given!(:question) { create :question, user: question_user, answers: create_list(:answer, 2) }
 
   context 'as an author of a question' do
-    scenario 'user have possibility to mark one answer as the best', js: true do
+
+    scenario 'best answer will be marked and placed on the top of the answer\'s table', js: true do
       sign_in(question_user)
       visit question_path(question)
 
-      best_answer = question.answers.last.id
+      best_answer = question.answers.last
 
-      within "tr#answer_#{best_answer}" do
+      within "tbody tr#answer_#{best_answer.id}" do
         click_on 'Best?'
         expect(page).to have_css 'td.best'
+      end
+
+      within first('tbody tr') do
+        expect(page).to have_content best_answer.body
       end
     end
   end

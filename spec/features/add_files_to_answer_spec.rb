@@ -2,7 +2,7 @@ require_relative 'acceptance_helper'
 
 feature 'Possibility to add an attachment to an answer' do
   given(:user) { create(:user) }
-  given!(:question) { create(:question) }
+  given(:question) { create(:question) }
 
   context 'as a registered user' do
     before do
@@ -15,7 +15,7 @@ feature 'Possibility to add an attachment to an answer' do
 
       attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
 
-      click_on 'Upload file'
+      click_on 'Upload file'  
       within page.all('.attachment-fields')[1] do
         attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
       end

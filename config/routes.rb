@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'attachments/destroy'
+
   devise_for :users
   get 'answer/index'
 

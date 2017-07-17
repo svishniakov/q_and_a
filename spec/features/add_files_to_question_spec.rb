@@ -17,7 +17,7 @@ feature 'Possibility to add an attachment to a question' do
       attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
       click_on 'Save question'
 
-      expect(page).to have_content 'spec_helper.rb'
+      expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
     end
   end
 end

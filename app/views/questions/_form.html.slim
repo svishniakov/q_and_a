@@ -10,4 +10,11 @@
       = f.label :body
     .control
       = f.text_area :body, placeholder: 'Question body', class: 'textarea'
+  .field
+    .label Attachments
+    .control
+      = f.fields_for :attachments do |a|
+        = a.label :file
+        = a.file_field :file
+
   = f.submit 'Save question', class: 'button is-primary'

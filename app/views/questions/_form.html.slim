@@ -11,9 +11,9 @@
     .control
       = f.text_area :body, placeholder: 'Question body', class: 'textarea'
   .field
-    .label Attachments
-    .control
+    #attachments
       = f.fields_for :attachments do |a|
         = render 'attachments/attachment_fields', f: a
+      .links
         = link_to_add_association 'Upload file', f, :attachments, partial: 'attachments/attachment_fields'
   = f.submit 'Save question', class: 'button is-primary'

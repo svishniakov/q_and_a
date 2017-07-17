@@ -16,6 +16,7 @@
                 = f.text_area :body, class: 'textarea', id: 'answer_body'
                 = f.fields_for :attachments do |a|
                   = render 'attachments/attachment_fields', f: a
+                .links
                   = link_to_add_association 'Upload file', f, :attachments, partial: 'attachments/attachment_fields'
                 br
                 = submit_tag 'Post answer', class: 'button is-primary'

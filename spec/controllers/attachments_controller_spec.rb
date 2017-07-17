@@ -17,32 +17,23 @@ RSpec.describe AttachmentsController, type: :controller do
     end
 
     context 'as an author' do
-      it 'user is able to delete attachment from question', js: true do
-        expect {
-          delete :destroy, params: { id: question_user.attachments.first
-          }, format: :js }.to change(Attachment, :count).by(-1)
+      it 'user is able to delete attachment from question' do
+        expect { delete :destroy, params: { id: question_user.attachments.first }, format: :js }.to change(Attachment, :count).by(-1)
       end
 
-      it 'user is able to delete attachment from answer', js: true do
-        expect {
-          delete :destroy, params: { id: answer_user.attachments.first
-          }, format: :js }.to change(Attachment, :count).by(-1)
+      it 'user is able to delete attachment from answer' do
+        expect { delete :destroy, params: { id: answer_user.attachments.first }, format: :js }.to change(Attachment, :count).by(-1)
       end
     end
 
-    context 'as a non-author' do
-      it 'user is trying to delete attachment from question', js: true do
-        expect {
-          delete :destroy, params: { id: question.attachments.first
-          }, format: :js }.to_not change(Attachment, :count)
+    context 'as a nonauthor' do
+      it 'user is trying to delete attachment from question' do
+        expect { delete :destroy, params: { id: question.attachments.first }, format: :js }.to_not change(Attachment, :count)
       end
 
-      it 'user is trying to delete attachment from answer', js: true do
-        expect {
-          delete :destroy, params: { id: answer.attachments.first
-          }, format: :js }.to_not change(Attachment, :count)
+      it 'user is trying to delete attachment from answer' do
+        expect { delete :destroy, params: { id: answer.attachments.first }, format: :js }.to_not change(Attachment, :count)
       end
     end
-
   end
 end

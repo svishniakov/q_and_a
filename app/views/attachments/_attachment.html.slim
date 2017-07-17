@@ -1,0 +1,7 @@
+div id="attachment_#{attachment.id}"
+  .columns
+    .column
+      = link_to attachment.file.filename, attachment.file.url, class: 'filename'
+    - if current_user && current_user.author_of?(attachment.attachable)
+      .column
+        = link_to 'Delete', attachment, method: :delete, remote: true, class: 'button is-danger is-small is-outlined'

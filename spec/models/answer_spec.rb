@@ -16,6 +16,7 @@ RSpec.describe Answer, type: :model do
   context 'relations' do
     it { should belong_to :question }
     it { should belong_to :user }
+    it { should have_many :attachments }
   end
 
   context 'methods' do
@@ -40,5 +41,9 @@ RSpec.describe Answer, type: :model do
         expect(question.answers.best_first.first).to eq default_best_answer
       end
     end
+  end
+
+  context 'attributes' do
+    it { should accept_nested_attributes_for :attachments }
   end
 end

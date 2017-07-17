@@ -13,6 +13,7 @@
   .field
     .label Attachments
     .control
-      = render 'questions/attachments_form', resource: f
-
+      = f.fields_for :attachments do |a|
+        = render 'attachments/attachment_fields', f: a
+        = link_to_add_association 'Upload file', f, :attachments, partial: 'attachments/attachment_fields'
   = f.submit 'Save question', class: 'button is-primary'

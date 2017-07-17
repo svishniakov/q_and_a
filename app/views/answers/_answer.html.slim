@@ -13,6 +13,9 @@
     td = answer.user.email
     td = answer.created_at.strftime('%B %d, %Y - %H:%M')
     td
+      - answer.attachments.each do |a|
+         = link_to a.file.filename, a.file.url, class: 'filename'
+    td
       - if current_user&.author_of?(answer)
         .field.has-addons
           .control

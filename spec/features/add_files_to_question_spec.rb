@@ -11,7 +11,7 @@ feature 'Possibility to add an attachment to a question' do
       click_on 'Ask question'
     end
 
-    scenario 'User can add an attachment during question creation' do
+    scenario 'User can add an attachment during question creation', js: true do
       fill_in 'Title', with: question.title
       fill_in 'Body', with: question.body
       attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"

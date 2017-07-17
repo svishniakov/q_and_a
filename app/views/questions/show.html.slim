@@ -14,6 +14,7 @@
               = form_for [@question, @answer], remote: true do |f|
                 = f.label :body, 'Your answer'
                 = f.text_area :body, class: 'textarea', id: 'answer_body'
+                = render 'questions/attachments_form', resource: f
                 br
                 = submit_tag 'Post answer', class: 'button is-primary'
     .column.is-2

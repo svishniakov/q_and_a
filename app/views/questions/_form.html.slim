@@ -13,8 +13,6 @@
   .field
     .label Attachments
     .control
-      = f.fields_for :attachments do |a|
-        = a.label :file
-        = a.file_field :file
+      = render 'questions/attachments_form', resource: f
 
   = f.submit 'Save question', class: 'button is-primary'

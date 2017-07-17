@@ -10,7 +10,7 @@ feature 'Possibility to add an attachment to an answer' do
       visit question_path(question)
     end
 
-    scenario 'User can add an attachment during answer creation' do
+    scenario 'User can add an attachment during answer creation', js: true do
       fill_in 'answer_body', with: 'My answer with attachment!'
       attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
       click_on 'Post answer'

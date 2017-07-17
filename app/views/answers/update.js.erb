@@ -3,6 +3,5 @@ $('.messages').remove();
 <% if @answer.errors.present? %>
   $('#answer_body').before('<%= j render 'common/errors', resource: @answer %>');
 <% else %>
-  $('#answers').append('<%= j render @answer %>');
-  $('#answer_body').val('');
+  $('tr#answer_<%= @answer.id %>').replaceWith('<%= j render @answer %>');
 <% end %>

@@ -1,13 +1,28 @@
 - if answer.persisted?
-  tr
+  tr id="answer_#{answer.id}"
+    - if answer.best?
+      td.best
+        = icon('check fa-lg')
+    - elsif user_signed_in? && current_user.author_of?(answer.question)
+      td
+        = link_to 'Best?', best_answer_path(answer), data: { answer_id: answer.id },\
+                           remote: true, method: :patch, id: 'best-answer-link', class: 'button is-small'
+    - else
+      td
     td = answer.body
     td = answer.user.email
     td = answer.created_at.strftime('%B %d, %Y - %H:%M')
     td
-      - if user_signed_in? && current_user.author_of?(answer)
+      - if current_user&.author_of?(answer)
         .field.has-addons
           .control
-            = link_to 'Edit answer', edit_answer_path(answer), class: 'button is-info is-outlined is-small'
+            = link_to 'Edit answer', '', class: 'button is-info is-outlined is-small edit-answer-link',\
+                                         data: {answer_id: answer.id}
           .control id="del_answer_#{answer.id}"
-            = link_to 'Delete answer', answer_path(answer), data: {confirm: 'Are you sure?'}, \
-                                                                                method: :delete, class: 'button is-danger is-outlined is-small'
+            = link_to 'Delete answer', answer, remote: true, data: {confirm: 'Are you sure?'}, \
+                                       method: :delete, class: 'button is-danger is-outlined is-small'
+
+        = form_for answer, html: {id: "edit_answer_#{answer.id}"}, remote: true do |f|
+          = f.label :body, 'Edit answer'
+          = f.text_area :body, class: 'textarea'
+          = f.submit 'Save', class: 'button is-primary'

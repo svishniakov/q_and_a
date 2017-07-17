@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Ask question form', %q{
 Logged in user needs to have possibility to access Ask question form

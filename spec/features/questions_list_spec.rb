@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Questions list', %q{
 Site visitor needs to have possibility to see all the questions

@@ -7,17 +7,11 @@
           = render @question
           .card-content
             table.table#answers
-              thead
-                tr
-                  th Answer
-                  th User
-                  th Date
-                  th
+              = render 'answers/answer_table_header'
               tbody
-                = render @question.answers
+                = render @question.answers.best_first
             - if user_signed_in?
               = form_for [@question, @answer], remote: true do |f|
-                = render 'common/errors', resource: @answer
                 = f.label :body, 'Your answer'
                 = f.text_area :body, class: 'textarea', id: 'answer_body'
                 br

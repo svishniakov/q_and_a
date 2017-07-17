@@ -25,3 +25,11 @@ $family-primary: $family-serif;
   @extend .notification;
   @extend .is-error;
 }
+
+.edit_answer {
+  display: none;
+}
+
+.best {
+  color: red;
+}

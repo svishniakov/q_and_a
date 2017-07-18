@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'attachments/destroy'
+
   devise_for :users
   get 'answer/index'
 
@@ -7,6 +9,8 @@ Rails.application.routes.draw do
       patch :best, on: :member
     end
   end
+
+  resources :attachments, only: :destroy
 
   root 'questions#index'
 

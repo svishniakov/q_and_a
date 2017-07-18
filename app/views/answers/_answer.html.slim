@@ -13,6 +13,8 @@
     td = answer.user.email
     td = answer.created_at.strftime('%B %d, %Y - %H:%M')
     td
+      = render answer.attachments
+    td
       - if current_user&.author_of?(answer)
         .field.has-addons
           .control

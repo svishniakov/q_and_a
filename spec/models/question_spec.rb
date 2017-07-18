@@ -9,5 +9,10 @@ RSpec.describe Question, type: :model do
   context 'relations' do
     it { should have_many(:answers).dependent(:destroy) }
     it { should belong_to :user }
+    it { should have_many :attachments }
+  end
+
+  context 'attributes' do
+    it { should accept_nested_attributes_for :attachments }
   end
 end

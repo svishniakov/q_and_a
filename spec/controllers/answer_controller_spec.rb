@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../support/voted'
 
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
@@ -7,6 +8,8 @@ RSpec.describe AnswersController, type: :controller do
   context 'as a registered user' do
     sign_in_user
     let(:user_answer) { create(:answer, question_id: question.id, user: @user) }
+
+    it_behaves_like 'voted'
 
     describe 'POST #create' do
       context 'using valid attributes' do

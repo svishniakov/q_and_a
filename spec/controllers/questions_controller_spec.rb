@@ -1,7 +1,10 @@
 require 'rails_helper'
+require_relative '../support/voted'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
+
+  it_behaves_like 'voted'
 
   context 'as an anonymous user' do
     describe 'GET #index' do

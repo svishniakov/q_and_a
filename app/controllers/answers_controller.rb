@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  include Voted
   before_action :authenticate_user!
   before_action :set_question, only: %i[create]
   before_action :set_answer_params, only: %i[update destroy best]

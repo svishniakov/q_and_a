@@ -2,7 +2,7 @@ module Voted
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_votable, only: %i[plus clear_vote minus]
+    before_action :set_votable, only: %i[plus minus clear_vote]
     respond_to :json, :html, :js
   end
 
@@ -45,7 +45,7 @@ module Voted
   end
 
   def respond_vote_author
-    respond_error("Author can't vote")
+    respond_error('Author can\'t vote')
   end
 
   def respond_json(content, status = 200)

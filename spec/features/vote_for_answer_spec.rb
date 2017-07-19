@@ -31,7 +31,6 @@ feature 'Answer rating' do
 
     scenario 'user have possibility to clear his vote', js: true do
       vote_answer = question.answers.first
-
       within "tbody tr#answer_#{vote_answer.id}" do
         click_on '+'
         click_on 'C'

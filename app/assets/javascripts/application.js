@@ -29,16 +29,12 @@ $(document).on('click', '.edit-answer-link', function(e) {
     return $('form#edit_answer_' + answerId).show();
 });
 
-// $(document).on('click', '.vote-link', function(e) {
-//     e.preventDefault();
-// })
-
 var ready = function() {
     return $('.vote-link').on('ajax:success', function(e, data, status, xhr) {
         var rating = '#rating_' + data.id;
         var button = 'td#voting_' + data.id;
         $(rating).html(data.content);
-        return $(button).load(location.href + ' ' + button + '>*', '');
+        return $(button).load(location.href + ' ' + button + '>*');
     }).on('ajax:error', function(e, response, status, xhr) {
         var data = response.responseJSON;
         var divId = 'tr#error-' + data.id;

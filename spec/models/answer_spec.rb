@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../support/votable'
 
 RSpec.describe Answer, type: :model do
 
@@ -32,6 +33,9 @@ RSpec.describe Answer, type: :model do
         expect(default_best_answer).to_not be_best
       end
     end
+
+    it_behaves_like 'votable'
+
   end
 
   context 'scopes' do

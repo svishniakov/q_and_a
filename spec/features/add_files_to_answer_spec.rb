@@ -18,7 +18,6 @@ feature 'Possibility to add an attachment to an answer' do
 
     click_on 'Post answer'
 
-    save_and_open_page
     within '#answers' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
       expect(page).to have_link 'rails_helper.rb', href: '/uploads/attachment/file/2/rails_helper.rb'

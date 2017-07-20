@@ -4,13 +4,33 @@
   table.table
     thead
       tr
+        th Rating
+        th Voting
         th Question
         th User
         th Created
         th
     tbody
       - @questions.each do |question|
-        tr
+        tr id="question_#{question.id}"
+          td id="rating_#{question.id}"
+            = question.rating
+            - if current_user && !current_user.author_of?(question)
+              td id="voting_#{question.id}"
+                .columns
+                  - if !question.voted?(current_user)
+                    .column
+                      = link_to '+', polymorphic_path([:plus, question]), method: :post, remote: true, data: {type: :json},
+                              title: 'Increase rating', class: 'button is-small is-success is-outlined vote-link'
+                    .column
+                      = link_to '-', polymorphic_path([:minus, question]), method: :post, remote: true, data: {type: :json},
+                              title: 'Decrease rating', class: 'button is-small is-info is-outlined vote-link'
+                  - else
+                    .column
+                      = link_to 'C', polymorphic_path([:clear_vote, question]), method: :delete, remote: true, data: {type: :json},
+                              title: 'Cancel my vote', class: 'button is-small is-danger is-outlined vote-link'
+            - else
+              td
           td = question.title
           td = question.user.email
           td = question.created_at.strftime('%d %b %Y - %H:%M')

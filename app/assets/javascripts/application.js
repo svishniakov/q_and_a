@@ -28,3 +28,18 @@ $(document).on('click', '.edit-answer-link', function(e) {
     var answerId = $(this).data('answerId');
     return $('form#edit_answer_' + answerId).show();
 });
+
+var ready = function() {
+    return $('.vote-link').on('ajax:success', function(e, data, status, xhr) {
+        var rating = '#rating_' + data.id;
+        var button = 'td#voting_' + data.id;
+        $(rating).html(data.content);
+        return $(button).load(location.href + ' ' + button + '>*');
+    }).on('ajax:error', function(e, response, status, xhr) {
+        var data = response.responseJSON;
+        var divId = 'tr#error-' + data.id;
+        return $(divId).html(data.content);
+    });
+};
+
+$(document).ready(ready);

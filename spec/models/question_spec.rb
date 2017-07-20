@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative '../support/votable'
 
 RSpec.describe Question, type: :model do
   context 'validations' do
@@ -14,5 +15,9 @@ RSpec.describe Question, type: :model do
 
   context 'attributes' do
     it { should accept_nested_attributes_for :attachments }
+  end
+
+  context 'methods' do
+    it_behaves_like 'votable'
   end
 end

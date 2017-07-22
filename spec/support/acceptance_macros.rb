@@ -5,4 +5,6 @@ module AcceptanceMacros
     fill_in 'Password', with: user.password
     click_button 'Log in'
   end
+
+  Capybara.server = :puma
 end

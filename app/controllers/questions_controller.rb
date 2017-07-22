@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question, only: %i[show edit update destroy]
   before_action :check_user, only: %i[edit update destroy]
+  after_action :publish_question, only: %i[create]
 
   def index
     @questions = Question.all
@@ -53,6 +54,17 @@ class QuestionsController < ApplicationController
       flash[:alert] = 'You have no sufficient rights to continue'
       redirect_to @question
     end
+  end
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast(
+        'questions',
+        ApplicationController.render(
+            partial: 'questions/questions_list',
+            locals: { question: @question, current_user: current_user }
+        )
+    )
   end
 
   def set_question

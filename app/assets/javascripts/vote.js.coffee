@@ -9,4 +9,5 @@ ready = ->
     data = response.responseJSON
     $('.errors').html data.content
 
-$(document).ready ready
+$(document).ready(ready)
+$(document).on('turbolonks:load', ready);

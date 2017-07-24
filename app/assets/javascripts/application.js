@@ -13,8 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.remotipart
-//= require turbolinks
 //= require cocoon
+//= require_self
 //= require_tree .
 
 $(document).on('click', '.notification > button.delete', function() {
@@ -29,17 +29,20 @@ $(document).on('click', '.edit-answer-link', function(e) {
     return $('form#edit_answer_' + answerId).show();
 });
 
+
 var ready = function() {
     return $('.vote-link').on('ajax:success', function(e, data, status, xhr) {
         var rating = '#rating_' + data.id;
-        var button = 'td#voting_' + data.id;
+        var button = '#voting_' + data.id;
         $(rating).html(data.content);
-        return $(button).load(location.href + ' ' + button + '>*');
+        $(button).load(location.href + ' ' + button + '>*');
     }).on('ajax:error', function(e, response, status, xhr) {
-        var data = response.responseJSON;
-        var divId = 'tr#error-' + data.id;
-        return $(divId).html(data.content);
+        data = response.responseJSON;
+        return $('.errors').html(data.content);
     });
 };
 
 $(document).ready(ready);
+$(document).on('turbolinks:load', ready);
+// $(document).on('page:load', ready);
+// $(document).on('page:update', ready);

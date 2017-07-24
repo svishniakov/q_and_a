@@ -37,3 +37,16 @@ $family-primary: $family-serif;
 .filename {
   font-size: $size-small;
 }
+
+.questions-list {
+  font-size: $size-normal;
+}
+
+.questions-list-item {
+  display: inline-block;
+  border-bottom: 1px dashed darkgrey;
+}
+
+.voting {
+  display: inline-block;
+}

@@ -1,26 +1,25 @@
-tr id="question_#{question.id}"
-  td id="rating_#{question.id}"
+.errors
+.columns.questions-list-item id="question_#{question.id}"
+  .column.is-1 id="rating_#{question.id}"
     = question.rating
-    - if current_user && !current_user.author_of?(question)
-      td id="voting_#{question.id}"
-        .columns
-          - if !question.voted?(current_user)
-            .column
-              = link_to '+', polymorphic_path([:plus, question]), method: :post, remote: true, data: {type: :json},
-                      title: 'Increase rating', class: 'button is-small is-success is-outlined vote-link'
-            .column
-              = link_to '-', polymorphic_path([:minus, question]), method: :post, remote: true, data: {type: :json},
-                      title: 'Decrease rating', class: 'button is-small is-info is-outlined vote-link'
-          - else
-            .column
-              = link_to 'C', polymorphic_path([:clear_vote, question]), method: :delete, remote: true, data: {type: :json},
-                      title: 'Cancel my vote', class: 'button is-small is-danger is-outlined vote-link'
-    - else
-      td
-  td = question.title
-  td = question.user.email
-  td = question.created_at.strftime('%d %b %Y - %H:%M')
-  td
+  - if current_user && !current_user.author_of?(question)
+    .column.is-1.voting id="voting_#{question.id}"
+      - if !question.voted?(current_user)
+        div
+          = link_to '+', polymorphic_path([:plus, question]), method: :post, remote: true, data: {type: :json},
+                title: 'Increase rating', class: 'button is-small is-success is-outlined vote-link'
+          = link_to '-', polymorphic_path([:minus, question]), method: :post, remote: true, data: {type: :json},
+                title: 'Decrease rating', class: 'button is-small is-info is-outlined vote-link'
+      - else
+        div
+          = link_to 'C', polymorphic_path([:clear_vote, question]), method: :delete, remote: true, data: {type: :json},
+                title: 'Cancel my vote', class: 'button is-small is-danger is-outlined vote-link'
+  - else
+    .column.is-1
+  .column = question.title
+  .column.is-2 = question.user.email
+  .column.is-2 = question.created_at.strftime('%d %b %Y - %H:%M')
+  .column.is-2
     .field.has-addons
       .control
         = link_to 'Show', question_path(question), class: 'button is-primary is-outlined is-small'
@@ -28,5 +27,4 @@ tr id="question_#{question.id}"
         .control
           = link_to 'Edit', edit_question_path(question), class: 'button is-info is-outlined is-small'
         .control id="del_question_#{question.id}"
-          = link_to 'Delete', question_path(question), data: {confirm: 'Are you sure?'}, \
-                                                          method: :delete, class: 'button is-danger is-outlined is-small'
+          = link_to 'Delete', question_path(question), data: {confirm: 'Are you sure?'}, method: :delete, class: 'button is-danger is-outlined is-small'

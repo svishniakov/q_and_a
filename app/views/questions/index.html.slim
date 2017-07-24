@@ -1,15 +1,4 @@
 .section
-  .title
-    ' All questions
-  table.table
-    thead
-      tr
-        th Rating
-        th Voting
-        th Question
-        th User
-        th Created
-        th
-    tbody.questions-list
-      - @questions.each do |question|
-        = render 'questions/questions_list', question: question
+  .questions-list
+    - @questions.each do |question|
+      = render 'questions/questions_list', question: question

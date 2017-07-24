@@ -15,32 +15,33 @@ feature 'Answer rating' do
 
     scenario 'user can vote for an answer', js: true do
       vote_answer = question.answers.first
-      within "tbody tr#answer_#{vote_answer.id}" do
+      within "#answer_#{vote_answer.id}" do
         click_on '+'
         expect(page).to have_content '1'
       end
     end
 
-    scenario 'user have no possibility to vote more than once', js: true do
-      vote_answer = question.answers.first
-      within "tbody tr#answer_#{vote_answer.id}" do
-        expect(page).to_not have_link '+'
-        expect(page).to_not have_link '-'
-      end
-    end
-
     scenario 'user have possibility to clear his vote', js: true do
       vote_answer = question.answers.first
-      within "tbody tr#answer_#{vote_answer.id}" do
+      within "#answer_#{vote_answer.id}" do
         click_on '+'
         click_on 'C'
         expect(page).to have_content '0'
       end
     end
 
+    scenario 'user have no possibility to vote more than once', js: true do
+      vote_answer = question.answers.first
+      within "#answer_#{vote_answer.id}" do
+        click_on '+'
+        click_on '-'
+        expect(page).to have_content 'You can vote only once'
+      end
+    end
+
     scenario 'user can devote an answer', js: true do
       vote_answer = question.answers.first
-      within "tbody tr#answer_#{vote_answer.id}" do
+      within "#answer_#{vote_answer.id}" do
         click_on '-'
         expect(page).to have_content '-1'
       end
@@ -54,7 +55,7 @@ feature 'Answer rating' do
 
       vote_answer = question.answers.last
 
-      within "tbody tr#answer_#{vote_answer.id}" do
+      within "#answer_#{vote_answer.id}" do
         expect(page).to_not have_link '+'
         expect(page).to_not have_link '-'
         expect(page).to_not have_link 'C'

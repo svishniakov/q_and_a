@@ -1,13 +1,14 @@
 ready = ->
-  $('.vote-link').on('ajax:success', (e, data, status, xhr) ->
+  $('.vote-link').bind('ajax:success', (e, data, status, xhr) ->
     rating = '#rating_' + data.id
-    button = '#voting_' + data.id
+#    button = '#voting_' + data.id
     $(rating).html data.content
-    $(button).load location.href + ' ' + button + '>*'
+#    $(button).load location.href + ' ' + button + '>*'
     return
   ).on 'ajax:error', (e, response, status, xhr) ->
     data = response.responseJSON
-    $('.errors').html data.content
+    rating = '#rating_' + data.id
+    $(rating).html data.content
 
 $(document).ready(ready)
 $(document).on('turbolonks:load', ready);

@@ -1,9 +1,9 @@
 require_relative 'acceptance_helper'
 
-feature 'Question rating', js: true do
+feature 'Question rating' do
 
-  given!(:user) { create(:user) }
-  given!(:question_user) { create(:user) }
+  given(:user) { create(:user) }
+  given(:question_user) { create(:user) }
   given!(:question) { create :question, user: question_user }
 
   context 'As nonauthor of a question' do
@@ -12,32 +12,32 @@ feature 'Question rating', js: true do
       visit root_path
     end
 
-    scenario 'user can vote for a question' do
+    scenario 'user can vote for a question', js: true do
       within "#question_#{question.id}" do
         click_on '+'
         expect(page).to have_content '1'
       end
     end
 
-    scenario 'user have no possibility to vote more than once' do
+    scenario 'user have possibility to clear his vote', js: true do
       within "#question_#{question.id}" do
-        expect(page).to_not have_link '+'
-        expect(page).to_not have_link '-'
-      end
-    end
-
-    scenario 'user have possibility to clear his vote' do
-      within "#question_#{question.id}" do
-        click_on '+'
         click_on 'C'
         expect(page).to have_content '0'
       end
     end
 
-    scenario 'user can devote a question' do
+    scenario 'user can devote a question', js: true do
       within "#question_#{question.id}" do
         click_on '-'
         expect(page).to have_content '-1'
+      end
+    end
+
+    scenario 'user have no possibility to vote more than once', js: true do
+      within "#question_#{question.id}" do
+        click_on '+'
+        click_on '-'
+        expect(page).to have_content 'You can vote only once'
       end
     end
   end

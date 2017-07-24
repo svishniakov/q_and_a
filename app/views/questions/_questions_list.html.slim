@@ -2,19 +2,15 @@
   .column.is-1 id="rating_#{question.id}"
     = question.rating
   - if current_user && !current_user.author_of?(question)
-    .column.is-1.voting id="voting_#{question.id}"
-      - if !question.voted?(current_user)
-        div
-          = link_to '+', polymorphic_path([:plus, question]), method: :post, remote: true, data: {type: :json},
-                title: 'Increase rating', class: 'button is-small is-success is-outlined vote-link'
-          = link_to '-', polymorphic_path([:minus, question]), method: :post, remote: true, data: {type: :json},
-                title: 'Decrease rating', class: 'button is-small is-info is-outlined vote-link'
-      - else
-        div
-          = link_to 'C', polymorphic_path([:clear_vote, question]), method: :delete, remote: true, data: {type: :json},
+    .column.is-2
+      = link_to '+', polymorphic_path([:plus, question]), method: :post, remote: true, data: {type: :json},
+              title: 'Increase rating', class: 'button is-small is-success is-outlined vote-link'
+      = link_to '-', polymorphic_path([:minus, question]), method: :post, remote: true, data: {type: :json},
+              title: 'Decrease rating', class: 'button is-small is-info is-outlined vote-link'
+      = link_to 'C', polymorphic_path([:clear_vote, question]), method: :delete, remote: true, data: {type: :json},
                 title: 'Cancel my vote', class: 'button is-small is-danger is-outlined vote-link'
   - else
-    .column.is-1
+    .column.is-2
   .column = question.title
   .column.is-2 = question.user.email
   .column.is-2 = question.created_at.strftime('%d %b %Y - %H:%M')

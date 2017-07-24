@@ -1,4 +1,3 @@
 $('.errors').remove();
 $('.messages').remove();
-$('#answers').html('<%= j render 'answer_table_header' %>')
 $('#answers').append('<%= j render @answer.question.answers.best_first %>');

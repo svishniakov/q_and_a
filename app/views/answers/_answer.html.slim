@@ -1,18 +1,18 @@
 - if answer.persisted?
-  tr id="answer_#{answer.id}"
+  .columns.questions-list-item id="answer_#{answer.id}"
     - if answer.best?
-      td.best
+      .column.is-1.best
         = icon('check fa-lg')
     - elsif user_signed_in? && current_user.author_of?(answer.question)
-      td
+      .column.is-1
         = link_to 'Best?', best_answer_path(answer), data: { answer_id: answer.id },\
                            remote: true, method: :patch, id: 'best-answer-link', class: 'button is-small'
     - else
-      td
-    td id="rating_#{answer.id}"
+      .column.is-1
+    .column.is-1 id="rating_#{answer.id}"
       = answer.rating
     - if current_user && !current_user.author_of?(answer)
-      td id="voting_#{answer.id}"
+      .column.is-1 id="voting_#{answer.id}"
         .columns
           - if !answer.voted?(current_user)
             .column
@@ -26,14 +26,13 @@
               = link_to 'C', polymorphic_path([:clear_vote, answer]), method: :delete, remote: true, data: {type: :json},
                       title: 'Cancel my vote', class: 'button is-small is-danger is-outlined vote-link'
     - else
-      td
-
-    td = answer.body
-    td = answer.user.email
-    td = answer.created_at.strftime('%B %d, %Y - %H:%M')
-    td
+      .column.is-1
+    .column = answer.body
+    .column.is-2 = answer.user.email
+    .column.is-2 = answer.created_at.strftime('%B %d, %Y - %H:%M')
+    .column.is-2
       = render answer.attachments
-    td
+    .column.is-2
       - if current_user&.author_of?(answer)
         .field.has-addons
           .control
@@ -42,8 +41,9 @@
           .control id="del_answer_#{answer.id}"
             = link_to 'Delete answer', answer, remote: true, data: {confirm: 'Are you sure?'}, \
                                        method: :delete, class: 'button is-danger is-outlined is-small'
-
-        = form_for answer, html: {id: "edit_answer_#{answer.id}"}, remote: true do |f|
-          = f.label :body, 'Edit answer'
-          = f.text_area :body, class: 'textarea'
-          = f.submit 'Save', class: 'button is-primary'
+  .columns
+    .column.is-8
+      = form_for answer, html: {id: "edit_answer_#{answer.id}"}, remote: true do |f|
+        = f.label :body, 'Edit answer'
+        = f.text_area :body, class: 'textarea'
+        = f.submit 'Save', class: 'button is-primary'

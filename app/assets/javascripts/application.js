@@ -14,35 +14,9 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require cocoon
-//= require_self
 //= require_tree .
 
 $(document).on('click', '.notification > button.delete', function() {
     $(this).parent().addClass('is-hidden');
     return false;
 });
-
-$(document).on('click', '.edit-answer-link', function(e) {
-    e.preventDefault();
-    $(this).hide();
-    var answerId = $(this).data('answerId');
-    return $('form#edit_answer_' + answerId).show();
-});
-
-
-var ready = function() {
-    return $('.vote-link').on('ajax:success', function(e, data, status, xhr) {
-        var rating = '#rating_' + data.id;
-        var button = '#voting_' + data.id;
-        $(rating).html(data.content);
-        $(button).load(location.href + ' ' + button + '>*');
-    }).on('ajax:error', function(e, response, status, xhr) {
-        data = response.responseJSON;
-        return $('.errors').html(data.content);
-    });
-};
-
-$(document).ready(ready);
-$(document).on('turbolinks:load', ready);
-$(document).on('page:load', ready);
-$(document).on('page:update', ready);

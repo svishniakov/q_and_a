@@ -16,9 +16,9 @@ feature 'Set best answer', %q{
 
       best_answer = question.answers.last
 
-      within "tbody tr#answer_#{best_answer.id}" do
+      within "#answer_#{best_answer.id}" do
         click_on 'Best?'
-        expect(page).to have_css 'td.best'
+        expect(page).to have_css '.best'
       end
 
       within first('tbody tr') do

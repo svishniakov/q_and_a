@@ -5,7 +5,7 @@
         - if answer.best?
           .column.is-1.best
             = icon('check fa-lg')
-        - elsif user_signed_in? && current_user.author_of?(answer.question)
+        - elsif !current_user.blank? && current_user.author_of?(answer.question)
           .column.is-1
             = link_to 'Best?', best_answer_path(answer), data: { answer_id: answer.id },\
                                remote: true, method: :patch, id: 'best-answer-link', class: 'button is-small'

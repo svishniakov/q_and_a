@@ -21,7 +21,7 @@ feature 'Set best answer', %q{
         expect(page).to have_css '.best'
       end
 
-      within first('tbody tr') do
+      within first("div#answers .questions-list-item") do
         expect(page).to have_content best_answer.body
       end
     end

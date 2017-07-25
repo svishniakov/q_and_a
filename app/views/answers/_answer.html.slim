@@ -11,7 +11,7 @@
                                remote: true, method: :patch, id: 'best-answer-link', class: 'button is-small'
         - else
           .column.is-1
-        .column.is-1 id="rating_#{answer.id}"
+        .column.is-2 id="rating_#{answer.id}"
           = answer.rating
         - if current_user && !current_user.author_of?(answer)
           .column.is-2
@@ -24,11 +24,11 @@
         - else
           .column.is-2
         .column = answer.body
-        .column.is-2 = answer.user.email
-        .column.is-2 = answer.created_at.strftime('%B %d, %Y - %H:%M')
-        .column.is-2
+        .column = answer.user.email
+        .column = answer.created_at.strftime('%B %d, %Y - %H:%M')
+        .column
           = render answer.attachments
-        .column.is-2
+        .column
           - if current_user&.author_of?(answer)
             .field.has-addons
               .control

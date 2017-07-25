@@ -1,10 +1,10 @@
 require_relative 'acceptance_helper'
 
-feature 'Possibility to add an attachment to a question' do
+feature 'Possibility to add an attachment to a question', js: true do
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'User can add an attachment during question creation', js: true do
+  scenario 'User can add an attachment during question creation' do
     sign_in(user)
     click_on 'Ask question'
 

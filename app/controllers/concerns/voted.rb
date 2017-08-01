@@ -41,7 +41,7 @@ module Voted
   end
 
   def respond_success
-    respond_json(@votable.rating)
+    respond_json([@votable.rating, @votable.voted?(current_user)])
   end
 
   def respond_vote_author

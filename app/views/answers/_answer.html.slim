@@ -27,7 +27,7 @@
         .column = answer.user.email
         .column = answer.created_at.strftime('%B %d, %Y - %H:%M')
         .column
-          = render answer.attachments
+          = render answer.attachments, current_user: current_user
         .column
           - if current_user&.author_of?(answer)
             .field.has-addons

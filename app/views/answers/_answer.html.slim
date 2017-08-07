@@ -11,10 +11,10 @@
                                remote: true, method: :patch, id: 'best-answer-link', class: 'button is-small'
         - else
           .column.is-1
-        .column.is-2 id="rating_#{answer.id}"
+        .column id="rating_#{answer.id}"
           = answer.rating
         - if current_user && !current_user.author_of?(answer)
-          .column.is-2
+          .column
             = link_to '+', polymorphic_path([:plus, answer]), method: :post, remote: true, data: {type: :json},
                         title: 'Increase rating', class: 'button is-small is-success is-outlined vote-link'
             = link_to '-', polymorphic_path([:minus, answer]), method: :post, remote: true, data: {type: :json},
@@ -22,23 +22,39 @@
             = link_to 'C', polymorphic_path([:clear_vote, answer]), method: :delete, remote: true, data: {type: :json},
                           title: 'Cancel my vote', class: 'button is-small is-danger is-outlined vote-link'
         - else
-          .column.is-2
+          .column
         .column = answer.body
         .column = answer.user.email
         .column = answer.created_at.strftime('%B %d, %Y - %H:%M')
         .column
           = render answer.attachments, current_user: current_user
         .column
-          - if current_user&.author_of?(answer)
-            .field.has-addons
-              .control
-                = link_to 'Edit answer', '', class: 'button is-info is-outlined is-small edit-answer-link',\
-                                             data: {answer_id: answer.id}
-              .control id="del_answer_#{answer.id}"
-                = link_to 'Delete answer', answer, remote: true, data: {confirm: 'Are you sure?'}, \
-                                           method: :delete, class: 'button is-danger is-outlined is-small'
+          .field.has-addons
+            - if user_signed_in?
+              - if current_user.author_of?(answer)
+                .control
+                  = link_to 'Edit answer', '', class: 'button is-info is-outlined is-small edit-answer-link',\
+                                               data: { answer_id: answer.id }
+                .control id="del_answer_#{answer.id}"
+                  = link_to 'Delete answer', answer, remote: true, data: { confirm: 'Are you sure?' }, \
+                                             method: :delete, class: 'button is-danger is-outlined is-small'
+              .control id="answer_#{answer.id}_comment"
+                = link_to 'Add comment', '', class: 'button is-primary is-outlined is-small add-comment-link', \
+                                                                        data: {answer_id: answer.id}
       .columns
-        .column.is-8
+        .column.is-3
+        .column.is-6 id="answer_comments_#{answer.id}"
+          = render answer.comments
+        .column.is-3
+      - if !current_user.blank?
+        .columns
+          .column.is-3
+          .column.is-6 id='answer_#{answer.id}_comments_form'
+            = render 'comments/form', commentable: answer
+          .column.is-3
+      .columns
+        .column.is-3
+        .column.is-6
           = form_for answer, html: {id: "edit_answer_#{answer.id}"}, remote: true do |f|
             = f.label :body, 'Edit answer'
             = f.text_area :body, class: 'textarea'

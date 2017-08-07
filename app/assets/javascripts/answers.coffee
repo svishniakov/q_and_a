@@ -17,5 +17,10 @@ $(document).on 'click', '.edit-answer-link', (e) ->
   e.preventDefault()
   $(this).hide()
   answerId = $(this).data('answerId')
-  console.log("Show")
   $('form#edit_answer_' + answerId).show()
+
+$(document).on 'click', '.add-comment-link', (e) ->
+  e.preventDefault()
+  $(this).hide()
+  answerId = $(this).data('answerId')
+  $('form#answer_' + answerId + '_comments_form').show()

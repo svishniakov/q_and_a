@@ -22,16 +22,11 @@ feature 'Possibility to delete answer' do
       visit question_path(question)
     end
 
-    scenario 'is able to delete answer' do
+    scenario 'is able to delete answer', js: true do
       within("div#del_answer_#{answer.id}") do
         click_on 'Delete answer'
         expect(page).to_not have_content answer.body
       end
-    end
-
-    scenario 'and see notification' do
-      click_on 'Delete answer'
-      expect(page).to have_content 'Answer successfully deleted'
     end
   end
 end

@@ -7,13 +7,28 @@
       = question.body
     .content Attachments:
     ul#attachments
-        = render @question.attachments
+      = render question.attachments
     .content
-    - if user_signed_in? && current_user.author_of?(question)
+      .columns
+        .column.is-3
+          ' Comments:
+        .column.is-6 id="question_comments_#{question.id}"
+          = render question.comments
+    - if user_signed_in?
+      .columns
+        .column.is-3
+        .column.is-6 id="question_comments_form_#{question.id}"
+          = render 'comments/form', commentable: question
+    .content
       .field.has-addons
-        .control
-          = link_to 'Edit question', edit_question_path(question),
-                  class: 'button is-info is-outlined is-small'
-        .control
-          = link_to 'Delete question', question_path(question),
-                  data: {confirm: 'Are you sure?'}, method: :delete, class: 'button is-danger is-outlined is-small'
+        - if user_signed_in?
+          - if current_user.author_of?(question)
+            .control
+              = link_to 'Edit question', edit_question_path(question),
+                      class: 'button is-info is-outlined is-small'
+            .control
+              = link_to 'Delete question', question_path(question),
+                      data: {confirm: 'Are you sure?'}, method: :delete, class: 'button is-danger is-outlined is-small'
+          .control
+            = link_to 'Add comment', '', class: 'button is-primary is-outlined is-small add-comment-link', \
+                                          data: {question_id: question.id}

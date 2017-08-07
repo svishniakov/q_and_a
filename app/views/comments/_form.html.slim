@@ -1,0 +1,5 @@
+= form_for [commentable, commentable.comments.new],\
+      html: {id: "#{commentable.class.to_s.downcase}_#{commentable.id}_comments_form"}, remote: true do |f|
+  = f.label :body, 'Your comment'
+  = f.text_area :body, class: 'textarea', id: "#{commentable.class.to_s.downcase}_#{commentable.id}_comments_form"
+  = f.submit 'Post comment', class: 'button is-primary is-small'

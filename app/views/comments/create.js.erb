@@ -1,0 +1,9 @@
+$('.errors').remove();
+$('.messages').remove();
+<% if @comment.errors.present? %>
+  $('div#<%= @commentable.class.to_s.downcase %>_comments_<%= @commentable.id %>').append('<%= j render 'common/errors', resource: @comment %>');
+<% else %>
+  $('#<%= @commentable.class.to_s.downcase %>_comments_<%= @commentable.id %>').append('<%= j render 'comments/comment', comment: @comment %>');
+  $('textarea#<%= @commentable.class.to_s.downcase %>_<%= @commentable.id %>_comments_form').val('');
+  $('form#<%= @commentable.class.to_s.downcase %>_<%= @commentable.id %>_comments_form').hide('');
+<% end %>

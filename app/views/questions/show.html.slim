@@ -4,16 +4,17 @@
       .card
         header
           = render @question
-          .card-content
-            div#answers
-              = render @question.answers.best_first
-            - if user_signed_in?
-              = form_for [@question, @answer], remote: true do |f|
-                = f.label :body, 'Your answer'
-                = f.text_area :body, class: 'textarea', id: 'answer_body'
-                = f.fields_for :attachments do |a|
-                  = render 'attachments/attachment_fields', f: a
-                .links
-                  = link_to_add_association 'Upload file', f, :attachments, partial: 'attachments/attachment_fields'
-                br
-                = submit_tag 'Post answer', class: 'button is-primary'
+        .card-content
+          div#answers
+            = render @question.answers.best_first
+            p
+          - if user_signed_in?
+            = form_for [@question, @answer], remote: true do |f|
+              = f.label :body, 'Your answer'
+              = f.text_area :body, class: 'textarea', id: 'answer_body'
+              = f.fields_for :attachments do |a|
+                = render 'attachments/attachment_fields', f: a
+              .links
+                = link_to_add_association 'Upload file', f, :attachments, partial: 'attachments/attachment_fields'
+              br
+              = submit_tag 'Post answer', class: 'button is-primary'

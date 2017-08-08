@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_comment, only: :destroy
+  after_action :publish_comment, only: %i[create]
 
   def create
     @comment = @commentable.comments.new comment_params
@@ -13,6 +14,16 @@ class CommentsController < ApplicationController
   end
 
   private
+
+  def publish_comment
+    return if @comment.errors.any?
+    ActionCable.server.broadcast(
+        "#{@commentable.class.to_s.downcase}_comments",
+        ApplicationController.render(
+            partial: @comment
+        )
+    )
+  end
 
   def set_comment
     @comment = Comment.find(params[:id])

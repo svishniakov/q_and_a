@@ -13,7 +13,8 @@
         .column.is-3
           ' Comments:
         .column.is-6 id="question_comments_#{question.id}"
-          = render question.comments
+          .question-comments
+            = render question.comments
     - if user_signed_in?
       .columns
         .column.is-3

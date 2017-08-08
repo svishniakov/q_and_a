@@ -16,5 +16,4 @@ ready = ->
     rating = '#rating_' + data.id
     $(rating).html data.content
 
-$(document).ready(ready)
 $(document).on('turbolonks:load', ready);

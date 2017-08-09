@@ -1,10 +1,10 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_comment, only: :destroy
-  after_action :publish_comment, only: %i[create]
+  after_action :publish_comment, only: :create
 
   def create
-    @comment = @commentable.comments.new comment_params
+    @comment = @commentable.comments.build comment_params
     @comment.user = current_user
     @comment.save
   end
@@ -19,9 +19,7 @@ class CommentsController < ApplicationController
     return if @comment.errors.any?
     ActionCable.server.broadcast(
         "#{@commentable.class.to_s.downcase}_comments",
-        ApplicationController.render(
-            partial: @comment
-        )
+        ApplicationController.render(json: { commentable: @commentable, comment: @comment })
     )
   end
 

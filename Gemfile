@@ -19,6 +19,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'carrierwave', '~> 1.0'
 gem 'remotipart'
 gem 'cocoon'
+gem 'gon'
 
 # UI
 gem 'slim-rails'

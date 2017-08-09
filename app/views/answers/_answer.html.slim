@@ -43,8 +43,9 @@
                                                                         data: {answer_id: answer.id}
       .columns
         .column.is-3
-        .column.is-6 id="answer_comments_#{answer.id}"
-          = render answer.comments
+        .column.is-6 id="#{answer.id}"
+          .answer-comments
+            = render answer.comments
         .column.is-3
       - if !current_user.blank?
         .columns
